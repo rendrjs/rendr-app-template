@@ -7,11 +7,8 @@ exports.config =
     minify: false
     cdn:
       protocol: 'http'
-      cnames: ['0.0.0.0:3030']
-      # cnames: ['10.0.44.229:3030']
-      pathPrefix: '/'
-    fingerprint:
-      enabled: false
+      cnames: ['localhost']
+      pathPrefix: ''
 
   errorHandler:
     dumpExceptions: true

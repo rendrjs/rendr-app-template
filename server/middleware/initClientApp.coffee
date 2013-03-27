@@ -8,10 +8,6 @@ module.exports = (pathToClientApp, config) ->
       remoteAddress = req.connection.remoteAddress
     app = new App
       session_manager: req.session?.data
-      req:
-        headers: req.headers
-        requestId: req.requestId
-        remoteAddress: remoteAddress
 
     # Stash on the request so can be accessed elsewhere
     req.rendrApp = app

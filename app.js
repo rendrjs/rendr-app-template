@@ -2,17 +2,30 @@
 
 require('coffee-script');
 var server = require('./server/server');
-var env = require('./config/environments/env');
-var assets = require('./server/lib/assets');
+var spawn = require('child_process').spawn;
 
 var port = process.env.PORT || 3030;
 
-var preCompile = function(cb) { return cb(); }; // empty function wrapper
-if (env.name === 'development') {
-  preCompile = assets.compile;
-}
+var compileAssets = function(callback) {
+  var grunt = spawn('grunt');
+  grunt.stdout.on('data', function(data) {
+    console.log('' + data);
+  });
 
-preCompile(function(err) {
+  grunt.stderr.on('data', function(data) {
+    console.log('grunt stderr: ' + data);
+  });
+
+  grunt.on('exit', function(code) {
+    var err;
+    if (code !== 0) {
+      err = new Error('grunt exited with code:' + code);
+    }
+    callback(err);
+  });
+};
+
+compileAssets(function(err) {
   if (err) throw err;
   server.init({}, function(err) {
     if (err) throw err;
