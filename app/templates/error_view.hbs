@@ -1,0 +1,15 @@
+<h2>
+{{#if message}}
+  {{message}}
+{{else}}
+  {{ t "shared.Unknown Error" }}
+{{/if}}
+</h2>
+
+<div class="content">
+{{#if stack}}
+  <pre>{{stack}}</pre>
+{{else}}
+  {{ t "mobile.nice error" }}
+{{/if}}
+</div>

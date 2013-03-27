@@ -1,4 +1,6 @@
-rendr-app-template
-==================
+# Rendr Boilerplate
 
-Basic skeleton for a Rendr app.
+## TODO
+* Grunt
+* Bootstrap
+* Brunch?

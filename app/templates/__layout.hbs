@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset='utf-8'/>
+    <title>Rendr Boilerplate</title>
+
+    <link href="{{asset_url "styles.css"}}" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="">
+    <section id=content>
+      {{{body}}}
+    </section>
+
+    <script src="{{asset_url "mergedAssets.js"}}"></script>
+    <script>
+    (function() {
+      var App = window.App = new (require('app'))({{json appData}});
+      App.bootstrapData({{json bootstrappedData}});
+      App.start();
+    })();
+    </script>
+
+  </body>
+
+</html>

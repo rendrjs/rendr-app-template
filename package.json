@@ -1,0 +1,41 @@
+{
+  "name": "your-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts" : {
+    "start" : "node app.js",
+    "test" : "NODE_ENV=test mocha --ui bdd --reporter spec --ignore-leaks ./test/test --recursive --compilers coffee:coffee-script ",
+    "integration" : "mocha --ui bdd --reporter spec --ignore-leaks --timeout 6000 ./test/integration/tests --recursive",
+    "compileAssets" : "node scripts/compileAssets.js",
+    "deploy": "node ./scripts/deploy.js",
+    "serverStats" : "node scripts/serverStats.js",
+    "logs" : "node scripts/logs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/airbnb/<repo>.git"
+  },
+  "dependencies": {
+      "express": "~>3",
+      "coffee-script": "1.6.2",
+      "underscore": "1.4.4",
+      "async":"0.1.22",
+      "rendr": "git+ssh://git@github.com:airbnb/rendr.git#26f15871736f3ae922b9911da553724e48968901",
+      "airbnb-api":"git+ssh://git@github.com:airbnb/node-airbnb-api.git#2d2e505789181b224dd56b253cf6aef23d35befe",
+      "asset-compiler":"git+ssh://git@github.com:airbnb/node-asset-compiler.git#397d5591ed9e307dbae8d46863c1a174b4b13be7"
+    },
+    "devDependencies": {
+      "mocha": "*",
+      "should": "*",
+      "sinon": "1.4.2",
+      "expect.js": "0.1.2",
+      "request":"2.11.1",
+      "prompt":"0.2.8",
+      "colors":"0.6.0"
+    },
+    "engines": {
+      "node": ">=0.8.12"
+    },
+    "private": true
+}
