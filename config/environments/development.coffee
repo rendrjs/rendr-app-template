@@ -13,3 +13,7 @@ exports.config =
   errorHandler:
     dumpExceptions: true
     showStack: true
+
+  api:
+    host: "api.github.com"
+    protocol: "https"

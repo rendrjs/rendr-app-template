@@ -11,3 +11,7 @@ exports.config =
       pathPrefix: ''
 
   errorHandler: {}
+
+  api:
+    host: "api.github.com"
+    protocol: "https"

@@ -8,6 +8,7 @@ env = require('../config/environments/env');
 router = require('./router')
 mw = require('./middleware')
 _ = require('underscore')
+DataAdapter = require('./lib/data_adapter')
 
 # Module variables
 app = express()
@@ -45,8 +46,8 @@ initMiddleware = ->
   app.configure ->
     # set up views
     app.set('views', __dirname + '/../app/views')
-    app.set('view engine', vConf.engineName)
-    app.engine(vConf.engineName, vConf.engine)
+    app.set('view engine', 'js')
+    app.engine('js', vConf.engine)
 
     # set the middleware stack
     app.use(express.compress())
@@ -62,8 +63,10 @@ initMiddleware = ->
 # Initialize our libraries
 #
 initLibs = (callback) ->
+  dataAdapter = new DataAdapter(env.current.api)
+
   options =
-    dataAdapter: require('./lib/data_adapter')
+    dataAdapter: dataAdapter
     errorHandler: mw.errorHandler()
   rendrServer.init(options, callback)
 
