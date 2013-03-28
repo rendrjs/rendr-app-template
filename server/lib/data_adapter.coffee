@@ -24,8 +24,10 @@ module.exports = class DataAdapter
       allow4xx: false
 
     requestApi = @apiDefaults(req)
-    debug('request: %s', inspect(requestApi))
+    start = new Date().getTime()
     request requestApi, (err, response, body) =>
+      end = new Date().getTime()
+      debug('%s %s %s %sms', requestApi.method.toUpperCase(), requestApi.url, response.statusCode, end - start)
       if options.convertErrorCode
         err ||= @getErrForResponse(response, {allow4xx: options.allow4xx})
       if ~(response.headers['content-type'] || '').indexOf('application/json')
@@ -44,6 +46,7 @@ module.exports = class DataAdapter
     urlOpts.pathname = req.path || req.pathname || req.url?.split('?')[0]
 
     _.defaults api,
+      method: 'GET'
       json: req.body
       url: url.format(urlOpts)
 
