@@ -3,8 +3,6 @@ var path = require('path');
 var assetCompiler = require('asset-compiler');
 
 var appDir = rootDir + '/app';
-var templateDir = appDir + '/templates';
-var templateFileFilter = '-name *.hbs | grep -v /__*';
 var publicDir = rootDir + '/public';
 var vendorDir = rootDir + '/assets/vendor';
 var stylesheetsDir = rootDir + '/assets/stylesheets';
@@ -24,16 +22,34 @@ module.exports = function(grunt) {
           'public/styles.css': stylesheetsDir + '/index.styl'
         }
       }
+    },
+
+    handlebars: {
+      compile: {
+        options: {
+          namespace: false,
+          commonjs: true,
+          processName: function(filename) {
+            return filename.replace('app/templates/', '').replace('.hbs', '');
+          }
+        },
+        src: "app/templates/*.hbs",
+        dest: "app/templates/compiledTemplates.js",
+        filter: function(filepath) {
+          var filename = path.basename(filepath);
+          return filename.slice(0, 2) !== '__';
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
 
-  grunt.registerTask('compileTemplates', compileTemplates);
   grunt.registerTask('bundle', bundle);
   grunt.registerTask('createManifest', createManifest);
 
-  grunt.registerTask('compile', ['compileTemplates', 'bundle', 'stylus', 'createManifest']);
+  grunt.registerTask('compile', ['handlebars', 'bundle', 'stylus', 'createManifest']);
 
   // Default task(s).
   grunt.registerTask('default', ['compile']);
@@ -47,22 +63,6 @@ var rendrVendorDir = rendrDir + '/assets/vendor';
 var rendrModulesDir = rendrDir + '/node_modules';
 
 var manifestLocation = path.normalize(rootDir + '/public/manifest.js');
-
-/**
-* Pre-compile handlebar templates.  Resulting compiledTemplates.js file will be stored within
-* the template source directory.
-*/
-function compileTemplates() {
-  var done = this.async();
-  var options = {
-    srcPath: templateDir,
-    fileFilter: templateFileFilter,
-    destPath: templateDir,
-    destFile: 'compiledTemplates.js'
-  };
-  assetCompiler.compile(options, done);
-}
-
 
 /**
 * Package javascript into a single mergedAssets.js file.  (if compileTemplates runs first, compiledTemplates.js
