@@ -1,6 +1,7 @@
 var Base = require('./base');
 
 module.exports = Base.extend({
-  url: '/users/:login'
+  url: '/users/:login',
+  idAttribute: 'login'
 });
 module.exports.identifier = 'User';
