@@ -1,33 +1,43 @@
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json')
-  });
-
-  grunt.registerTask('compileTemplates', compileTemplates);
-  grunt.registerTask('bundle', bundle);
-  grunt.registerTask('buildCss', buildCss);
-  grunt.registerTask('createManifest', createManifest);
-
-  grunt.registerTask('compile', ['compileTemplates', 'bundle', 'buildCss', 'createManifest']);
-
-  // Default task(s).
-  grunt.registerTask('default', ['compile']);
-};
-
-
+var rootDir = __dirname;
 var path = require('path');
 var assetCompiler = require('asset-compiler');
-var env = require(process.env.PWD + '/config/environments/env');
 
-var rootDir = __dirname;
 var appDir = rootDir + '/app';
 var templateDir = appDir + '/templates';
 var templateFileFilter = '-name *.hbs | grep -v /__*';
 var publicDir = rootDir + '/public';
 var vendorDir = rootDir + '/assets/vendor';
 var stylesheetsDir = rootDir + '/assets/stylesheets';
+
+module.exports = function(grunt) {
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
+    stylus: {
+      compile: {
+        options: {
+          paths: [stylesheetsDir],
+          'include css': true
+        },
+        files: {
+          'public/styles.css': stylesheetsDir + '/index.styl'
+        }
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+
+  grunt.registerTask('compileTemplates', compileTemplates);
+  grunt.registerTask('bundle', bundle);
+  grunt.registerTask('createManifest', createManifest);
+
+  grunt.registerTask('compile', ['compileTemplates', 'bundle', 'stylus', 'createManifest']);
+
+  // Default task(s).
+  grunt.registerTask('default', ['compile']);
+};
 
 var modulesDir = rootDir + '/node_modules';
 var rendrDir = modulesDir + '/rendr';
@@ -83,20 +93,6 @@ function bundle() {
   };
   assetCompiler.bundle(options, done);
 }
-
-
-function buildCss() {
-  var done = this.async();
-  var minify = (env.current.assets && env.current.assets.minify === true);
-  var options = {
-    stylusPath: stylesheetsDir + '/index.styl',
-    cssOutputFile: publicDir + '/styles.css',
-    stylesheets: stylesheetsDir,
-    minify: minify
-  };
-  assetCompiler.createCss(options, done);
-}
-
 
 function createManifest() {
   var done = this.async();
