@@ -1,6 +1,6 @@
-# Rendr Boilerplate
+# Rendr App Template
+## GitHub Browser app
 
 ## TODO
 * Grunt
-* Bootstrap
-* Brunch?
+* Lazy load repos

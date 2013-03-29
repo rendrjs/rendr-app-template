@@ -1,4 +1,13 @@
 module.exports = {
+  index: function(params, callback) {
+    var fetchSpec = {
+      collection: {collection: 'Users', params: params}
+    };
+    this.app.fetcher.fetch(fetchSpec, function(err, result) {
+      callback(err, 'users_index_view', result);
+    });
+  },
+
   show: function(params, callback) {
     var fetchSpec = {
       model: {model: 'User', params: params},
