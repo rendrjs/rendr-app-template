@@ -27,7 +27,8 @@ Check out the directory structure:
 
 ## Routes file
 
-```javascript
+```js
+// app/routes.js
 module.exports = function(match) {
   match('',                   'home#index');
   match('repos',              'repos#index');
@@ -40,9 +41,44 @@ module.exports = function(match) {
 
 ## Controllers
 
+A controller is a simple JavaScript object, where each property is a controller action.  Here is the most simple controller.
+
+```js
+// app/controllers/home_controller.js
+module.exports = {
+  index: function(params, callback) {
+    callback(null, 'home_index_view');
+  }
+};
+
+```
+
 
 ## Views
 
+```js
+// app/views/home_index_view.js
+var BaseView = require('./base_view');
+
+module.exports = BaseView.extend({});
+module.exports.identifier = 'HomeIndexView';
+```
+
+We set the property `indentifier` on the view constructor to aid in the view hydration process. More on that later.
+
+If using CoffeeScript, a view constructor's `name` property is set for you.
+
+```coffeescript
+# app/views/home_index_view.coffee
+BaseView = require('./base_view')
+
+module.exports = class HomeIndexView extends BaseView
+
+console.log(HomeIndexView.name)
+ => "HomeIndexView"
+console.log(module.exports.name)
+ => "HomeIndexView"
+```
 
 ## Templates
 
