@@ -74,8 +74,6 @@ BaseView = require('./base_view')
 
 module.exports = class HomeIndexView extends BaseView
 
-console.log(HomeIndexView.name)
- => "HomeIndexView"
 console.log(module.exports.name)
  => "HomeIndexView"
 ```

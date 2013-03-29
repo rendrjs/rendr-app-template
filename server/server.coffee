@@ -9,6 +9,7 @@ router = require('./router')
 mw = require('./middleware')
 _ = require('underscore')
 DataAdapter = require('./lib/data_adapter')
+viewEngine = require('rendr/server/viewEngine')
 
 # Module variables
 app = express()
@@ -40,22 +41,17 @@ exports.start = (options, callback) ->
 # Initialize middleware stack
 #
 initMiddleware = ->
-  # ask rendr lib for view config
-  vConf = rendrServer.viewConfig
-
   app.configure ->
     # set up views
     app.set('views', __dirname + '/../app/views')
     app.set('view engine', 'js')
-    app.engine('js', vConf.engine)
+    app.engine('js', viewEngine)
 
     # set the middleware stack
     app.use(express.compress())
     app.use(express.static(__dirname + '/../public'))
     app.use(express.logger())
     app.use(express.bodyParser())
-    app.use(express.cookieParser())
-    app.use(express.methodOverride())
     app.use(app.router)
     app.use(mw.errorHandler())
 
@@ -69,5 +65,3 @@ initLibs = (callback) ->
     dataAdapter: dataAdapter
     errorHandler: mw.errorHandler()
   rendrServer.init(options, callback)
-
-exports.rendrServer = rendrServer
