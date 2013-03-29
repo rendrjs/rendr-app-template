@@ -1,1 +1,42 @@
-{{login}}
+<img src="{{avatar_url}}" width=80 height=80> {{login}} ({{public_repos}} public repos)
+
+<br>
+
+<div class="row-fluid">
+  <div class="span6">
+    <h3>Repos</h3>
+    <table class="repos-table table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Watchers</th>
+          <th>Forks</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each repos}}
+        <tr>
+          <td><a href="/repos/{{../login}}/{{name}}">{{name}}</a></td>
+          <td>{{watchers_count}}</td>
+          <td>{{forks_count}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="span6">
+    <h3>Info</h3>
+    <br>
+    <table class="info-table table">
+      <tr>
+        <th>Location</th>
+        <td>{{location}}</td>
+      </tr>
+      <tr>
+        <th>Blog</th>
+        <td>{{blog}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

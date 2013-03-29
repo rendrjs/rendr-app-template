@@ -28,6 +28,7 @@ module.exports = class DataAdapter
     request requestApi, (err, response, body) =>
       end = new Date().getTime()
       debug('%s %s %s %sms', requestApi.method.toUpperCase(), requestApi.url, response.statusCode, end - start)
+      debug('%s', inspect(response.headers))
       if options.convertErrorCode
         err ||= @getErrForResponse(response, {allow4xx: options.allow4xx})
       if ~(response.headers['content-type'] || '').indexOf('application/json')
@@ -45,11 +46,21 @@ module.exports = class DataAdapter
     urlOpts = _.defaults _.pick(req, 'protocol', 'port', 'query'), _.pick(@options, optionsKeys)
     urlOpts.pathname = req.path || req.pathname || req.url?.split('?')[0]
 
-    _.defaults api,
+    api = _.defaults api,
       method: 'GET'
-      json: req.body
       url: url.format(urlOpts)
 
+    api.json = req.body if req.body?
+
+    basicAuth = process.env.BASIC_AUTH
+    if basicAuth?
+      authParts = basicAuth.split(':')
+      api.auth =
+        username: authParts[0]
+        password: authParts[1]
+        sendImmediately: true
+
+    api
 
   # Convert 4xx, 5xx responses to be errors.
   getErrForResponse: (res, options = {}) ->
