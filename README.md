@@ -27,7 +27,7 @@ Check out the directory structure:
 
 ## Routes file
 
-```js
+```javascript
 module.exports = function(match) {
   match('',                   'home#index');
   match('repos',              'repos#index');
@@ -36,7 +36,7 @@ module.exports = function(match) {
   match('users/:login',       'users#show');
 };
 
-``
+```
 
 ## Controllers
 
