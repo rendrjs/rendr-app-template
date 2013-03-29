@@ -1,20 +1,14 @@
 {
-  "name": "your-app",
+  "name": "rendr-app-template",
   "version": "0.0.1",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "DEBUG=app:* node index.js",
-    "test": "NODE_ENV=test mocha --ui bdd --reporter spec --ignore-leaks ./test/test --recursive --compilers coffee:coffee-script ",
-    "integration": "mocha --ui bdd --reporter spec --ignore-leaks --timeout 6000 ./test/integration/tests --recursive",
-    "compileAssets": "node scripts/compileAssets.js",
-    "deploy": "node ./scripts/deploy.js",
-    "serverStats": "node scripts/serverStats.js",
-    "logs": "node scripts/logs"
+    "start": "DEBUG=app:* node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/airbnb/<repo>.git"
+    "url": "git://github.com/airbnb/rendr-app-template.git"
   },
   "dependencies": {
     "express": "~>3",

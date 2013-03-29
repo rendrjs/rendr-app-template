@@ -2,7 +2,50 @@
 ## GitHub Browser
 
 The purpose of this little app is to demonstrate one way of using Rendr to build a web app that runs on both the client and the server.
-## Getting Started
+
+## Running the example
+
+First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Then, clone this repo to a local directory and run `npm install` to install dependencies:
+
+    $ git clone git@github.com:airbnb/rendr-app-template.git
+    $ cd rendr-app-template
+    $ npm install
+    
+Then, start the web server. It defaults to port 3030. This will also run `grunt` to compile assets.
+
+    $ npm start
+
+    > rendr-app-template@0.0.1 start /Users/spike/code/rendr-app-template
+	> DEBUG=app:* node index.js
+	
+	Running "handlebars:compile" (handlebars) task
+	File "app/templates/compiledTemplates.js" created.
+	
+	Running "bundle" task
+	Compiled /Users/spike/code/rendr-app-template/public/mergedAssets.js
+	
+	Running "stylus:compile" (stylus) task
+	File public/styles.css created.	
+	
+	Running "createManifest" task
+	Created /Users/spike/code/rendr-app-template/public/manifest.js
+	
+	Done, without errors.
+	
+	server pid 71878 listening on port 3030 in development mode
+  
+Then pull up the app in your web browser:
+
+    $ open http://localhost:3030
+
+You can choose a different port by passing the `PORT` environment variable:
+
+    $ PORT=80 npm start  
+
+### GitHub API Rate Limit
+
+
+## Getting Started With Rendr
 
 This basic Rendr app looks like a hybrid between a standard client-side MVC Backbone.js app and an Express app, with a little Rails convention thrown in.
 
