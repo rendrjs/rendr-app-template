@@ -10,40 +10,47 @@ First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.
     $ git clone git@github.com:airbnb/rendr-app-template.git
     $ cd rendr-app-template
     $ npm install
-    
+
 Then, start the web server. It defaults to port 3030. This will also run `grunt` to compile assets.
 
     $ npm start
 
     > rendr-app-template@0.0.1 start /Users/spike/code/rendr-app-template
 	> DEBUG=app:* node index.js
-	
+
 	Running "handlebars:compile" (handlebars) task
 	File "app/templates/compiledTemplates.js" created.
-	
+
 	Running "bundle" task
 	Compiled /Users/spike/code/rendr-app-template/public/mergedAssets.js
-	
+
 	Running "stylus:compile" (stylus) task
-	File public/styles.css created.	
-	
+	File public/styles.css created.
+
 	Running "createManifest" task
 	Created /Users/spike/code/rendr-app-template/public/manifest.js
-	
+
 	Done, without errors.
-	
+
 	server pid 71878 listening on port 3030 in development mode
-  
+
 Then pull up the app in your web browser:
 
     $ open http://localhost:3030
 
 You can choose a different port by passing the `PORT` environment variable:
 
-    $ PORT=80 npm start  
+    $ PORT=80 npm start
 
-### GitHub API Rate Limit
+### GitHub API rate limit
 
+GitHub [rate limits](http://developer.github.com/v3/#rate-limiting) unauthenticated requests to its public API to 60 requests per hour per IP. This should be enough for just playing with the sample app, but if you pull it down and start developing off it you may run up against the rate limit.
+
+If this happens to you, you can supply your GitHub creds for HTTP Basic Auth using the BASIC_AUTH environment variable. **Be very, very careful with this!** It means you will be typing your GitHub credentials in plain text, which will be saved to your Bash history and may be intercepted by other programs. If you do this, immediately change your password before and afterwards. This should only be necessary if you're developing on the app and need to keep refreshing the page.
+
+	$ BASIC_AUTH=githubusername:githubpassword npm start
+
+**You've been warned.** Your best bet may be to alter the project to read from your favorite RESTful API.
 
 ## Getting Started With Rendr
 
