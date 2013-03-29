@@ -1,13 +1,20 @@
 var BaseApp = require('rendr/shared/app');
 
-var handlebarsHelpers = require('./helpers/handlebars_helpers');
-_.each(handlebarsHelpers, function(value, key) {
-  Handlebars.registerHelper(key, value);
-});
-
 module.exports = BaseApp.extend({
   defaults: {
     loading: false
+  },
+
+  // @shared
+  postInitialize: function() {
+    this.initHandlebarsHelpers();
+  },
+
+  initHandlebarsHelpers: function() {
+    var handlebarsHelpers = require('./helpers/handlebars_helpers');
+    _.each(handlebarsHelpers, function(value, key) {
+      Handlebars.registerHelper(key, value);
+    });
   },
 
   // @client

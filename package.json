@@ -22,7 +22,7 @@
     "underscore": "1.4.4",
     "async": "0.1.22",
     "request": "~2.16",
-    "rendr": "git+ssh://git@github.com:airbnb/rendr.git#26f15871736f3ae922b9911da553724e48968901",
+    "rendr": "git+ssh://git@github.com:airbnb/rendr.git#f52d6a1821e9c244ddaa98356964fc2f2350ec27",
     "asset-compiler": "git+ssh://git@github.com:airbnb/node-asset-compiler.git#397d5591ed9e307dbae8d46863c1a174b4b13be7",
     "debug": "*"
   },
