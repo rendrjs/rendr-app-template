@@ -4,7 +4,7 @@
 require('coffee-script')
 rendrServer = require('rendr').server
 express = require('express')
-env = require('../config/environments/env');
+env = require('./lib/env');
 router = require('./router')
 mw = require('./middleware')
 _ = require('underscore')

@@ -1,6 +1,6 @@
 routes = require('./routes')
 rendrServer = require('rendr').server
-env = require('../config/environments/env')
+env = require('./lib/env')
 mw = require('./middleware')
 
 getController = (controllerName) ->
@@ -23,7 +23,7 @@ _preRendrMiddleware = null
 getPreRendrMiddleware =  ->
   _preRendrMiddleware ?= [
     mw.initSession()
-    mw.initClientApp(env.clientAppDir + '/app', env.current.clientApp)
+    mw.initClientApp(env.current.clientApp)
   ]
 
 buildRendrRoutes = (app) ->
