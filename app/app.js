@@ -5,18 +5,6 @@ module.exports = BaseApp.extend({
     loading: false
   },
 
-  // @shared
-  postInitialize: function() {
-    this.initHandlebarsHelpers();
-  },
-
-  initHandlebarsHelpers: function() {
-    var handlebarsHelpers = require('./helpers/handlebars_helpers');
-    _.each(handlebarsHelpers, function(value, key) {
-      Handlebars.registerHelper(key, value);
-    });
-  },
-
   // @client
   start: function() {
     // Show a loading indicator when the app is fetching.

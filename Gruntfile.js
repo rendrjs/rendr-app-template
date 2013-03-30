@@ -37,6 +37,8 @@ module.exports = function(grunt) {
         dest: "app/templates/compiledTemplates.js",
         filter: function(filepath) {
           var filename = path.basename(filepath);
+          // Exclude files that begin with '__' from being sent to the client,
+          // i.e. __layout.hbs.
           return filename.slice(0, 2) !== '__';
         }
       }
@@ -47,9 +49,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
   grunt.registerTask('bundle', bundle);
-  grunt.registerTask('createManifest', createManifest);
 
-  grunt.registerTask('compile', ['handlebars', 'bundle', 'stylus', 'createManifest']);
+  grunt.registerTask('compile', ['handlebars', 'bundle', 'stylus']);
 
   // Default task(s).
   grunt.registerTask('default', ['compile']);
@@ -61,8 +62,6 @@ var rendrClientDir = rendrDir + '/client';
 var rendrSharedDir = rendrDir + '/shared';
 var rendrVendorDir = rendrDir + '/assets/vendor';
 var rendrModulesDir = rendrDir + '/node_modules';
-
-var manifestLocation = path.normalize(rootDir + '/public/manifest.js');
 
 /**
 * Package javascript into a single mergedAssets.js file.  (if compileTemplates runs first, compiledTemplates.js
@@ -92,21 +91,4 @@ function bundle() {
     destFile: 'mergedAssets.js'
   };
   assetCompiler.bundle(options, done);
-}
-
-function createManifest() {
-  var done = this.async();
-  // create manifist file
-  var manifest = {};
-  ['mergedAssets.js', 'styles.css'].forEach(function(name) {
-    manifest[name] = '/' + name;
-  });
-  var body = "// Created at " + new Date().toString();
-  body += "\nmodule.exports = " + JSON.stringify(manifest);
-  body += "\n";
-  assetCompiler.fse.writeFile(manifestLocation, body, function (err) {
-    if (err) return done(err);
-    console.log("Created " + manifestLocation);
-    done();
-  });
 }

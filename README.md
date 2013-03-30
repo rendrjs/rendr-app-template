@@ -27,9 +27,6 @@ Then, start the web server. It defaults to port 3030. This will also run `grunt`
 	Running "stylus:compile" (stylus) task
 	File public/styles.css created.
 
-	Running "createManifest" task
-	Created /Users/spike/code/rendr-app-template/public/manifest.js
-
 	Done, without errors.
 
 	server pid 71878 listening on port 3030 in development mode
@@ -61,7 +58,6 @@ Check out the directory structure:
     |- app/
     |--- collections/
     |--- controllers/
-    |--- helpers/
     |--- models/
     |--- templates/
     |--- views/
@@ -118,6 +114,7 @@ We set the property `indentifier` on the view constructor to aid in the view hyd
 
 If using CoffeeScript, a view constructor's `name` property is set for you.
 
+
 ```coffeescript
 # app/views/home_index_view.coffee
 BaseView = require('./base_view')
@@ -127,6 +124,11 @@ module.exports = class HomeIndexView extends BaseView
 console.log(module.exports.name)
  => "HomeIndexView"
 ```
+
+### The view lifecycle
+
+### The view hierarchy
+
 
 ## Templates
 

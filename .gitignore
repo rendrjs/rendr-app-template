@@ -1,10 +1,6 @@
 node_modules
 public/mergedAssets.js
-public/manifest.js
 app/templates/compiledTemplates.js
 public/styles.css
-static/public
-*.tbz
-tmp/
 .DS_Store
 npm-debug.log
