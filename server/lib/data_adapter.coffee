@@ -26,11 +26,12 @@ module.exports = class DataAdapter
     requestApi = @apiDefaults(req)
     start = new Date().getTime()
     request requestApi, (err, response, body) =>
+      return callback(err) if err?
       end = new Date().getTime()
       debug('%s %s %s %sms', requestApi.method.toUpperCase(), requestApi.url, response.statusCode, end - start)
       debug('%s', inspect(response.headers))
       if options.convertErrorCode
-        err ||= @getErrForResponse(response, {allow4xx: options.allow4xx})
+        err = @getErrForResponse(response, {allow4xx: options.allow4xx})
       if ~(response.headers['content-type'] || '').indexOf('application/json')
         try
           body = JSON.parse(body)
