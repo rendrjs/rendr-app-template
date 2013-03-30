@@ -2,7 +2,6 @@ var rootDir = __dirname;
 var path = require('path');
 var assetCompiler = require('asset-compiler');
 
-var appDir = rootDir + '/app';
 var publicDir = rootDir + '/public';
 var vendorDir = rootDir + '/assets/vendor';
 var stylesheetsDir = rootDir + '/assets/stylesheets';
@@ -58,8 +57,6 @@ module.exports = function(grunt) {
 
 var modulesDir = rootDir + '/node_modules';
 var rendrDir = modulesDir + '/rendr';
-var rendrClientDir = rendrDir + '/client';
-var rendrSharedDir = rendrDir + '/shared';
 var rendrVendorDir = rendrDir + '/assets/vendor';
 var rendrModulesDir = rendrDir + '/node_modules';
 
@@ -72,9 +69,9 @@ function bundle() {
   var options = {
     // source directories
     src: [
-      {type:'src', path:appDir}, // we want all the files in appDir
-      {type:'src', path:rendrClientDir, as:'/rendr/client'},  // copy client files to /rendr/client
-      {type:'src', path:rendrSharedDir, as:'/rendr/shared'}   // copy shared files to /rendr/shared
+      {type:'src', path: rootDir + '/app'}, // All of the files in app/
+      {type:'src', path: rendrDir + '/client', as:'/rendr/client'},  // copy client files to /rendr/client
+      {type:'src', path: rendrDir + '/shared', as:'/rendr/shared'}   // copy shared files to /rendr/shared
     ],
     // specific file dependencies
     depend: [
