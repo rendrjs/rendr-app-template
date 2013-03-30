@@ -12,18 +12,18 @@
   },
   "dependencies": {
     "express": "~>3",
-    "coffee-script": "1.6.2",
-    "underscore": "1.4.4",
-    "async": "0.1.22",
+    "coffee-script": "~1.6.2",
+    "underscore": "~1.4.4",
+    "async": "~0.1.22",
     "request": "~2.16",
     "rendr": "git+ssh://git@github.com:airbnb/rendr.git#a1447ec05d80c2d23227f97f84ee9828cf45ff20",
-    "asset-compiler": "git+ssh://git@github.com:airbnb/node-asset-compiler.git#397d5591ed9e307dbae8d46863c1a174b4b13be7",
     "debug": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-stylus": "~0.5.0",
-    "grunt-contrib-handlebars": "git://github.com/spikebrehm/grunt-contrib-handlebars#d61e7457c6551965f88de46ad207fd67d18ddd4a"
+    "grunt-contrib-handlebars": "git://github.com/spikebrehm/grunt-contrib-handlebars#d61e7457c6551965f88de46ad207fd67d18ddd4a",
+    "grunt-rendr-stitch": "~0.0.1"
   },
   "engines": {
     "node": ">=0.8"
