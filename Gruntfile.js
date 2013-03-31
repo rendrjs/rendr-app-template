@@ -1,6 +1,4 @@
-var rootDir = __dirname;
 var path = require('path');
-var assetCompiler = require('asset-compiler');
 
 var stylesheetsDir = 'assets/stylesheets';
 var rendrDir = 'node_modules/rendr';
