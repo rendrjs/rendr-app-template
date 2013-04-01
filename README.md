@@ -137,5 +137,8 @@ console.log(module.exports.name)
 
 
 ## TODO
-* Grunt
 * Lazy load repos
+
+## License
+
+MIT
