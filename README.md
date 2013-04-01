@@ -70,6 +70,10 @@ Check out the directory structure:
 
 **Note**: I want to stress that this is just one way to build an app using Rendr. I hope it can evolve to support a number of different app configurations, with the shared premise that the components should be able to run on either side of the wire. For example, the full-on client-side MVC model isn't appropriate for all types of apps. Sometimes it's more appropriate to load HTML fragments over the wire, also known as PJAX. Rendr apps should be able to support this as well.
 
+## CommonJS using Stitch
+
+The CommonJS module pattern is used by Node.js is useful, and using a tool called [Stitch](https://github.com/sstephenson/stitch), we can emulate this pattern in the browser.
+
 ## Routes file
 
 ```js
@@ -101,28 +105,31 @@ module.exports = {
 
 ## Views
 
+A Rendr view is a sublcass of `Backbone.View` with some additional methods added to support client-server rendering, plus methods that make it easier to manage the view lifecycle.
+
+Creating your own view should look familiar to Backbone users:
+
 ```js
 // app/views/home_index_view.js
 var BaseView = require('./base_view');
 
-module.exports = BaseView.extend({});
+module.exports = BaseView.extend({
+  className: 'home_index_view',
+  
+  events: {
+    'click p': 'handleClick',
+  },
+  
+  handleClick: function() {…}
+});
 module.exports.id = 'HomeIndexView';
 ```
 
+You can add `className`, `tagName`, `events`, and all of the other `Backbone.View` properties you know and love.
+
 We set the property `indentifier` on the view constructor to aid in the view hydration process. More on that later.
 
-If using CoffeeScript, a view constructor's `name` property is set for you.
-
-
-```coffeescript
-# app/views/home_index_view.coffee
-BaseView = require('./base_view')
-
-module.exports = class HomeIndexView extends BaseView
-
-console.log(module.exports.name)
- => "HomeIndexView"
-```
+Our views, just like all of the code in the `app/` directory, are executed in both the client and the server, but of course certain behaviors are only relevant in the client. The `events` hash is ignored by the server, as well as any DOM-related event handlers.
 
 ### The view lifecycle
 
@@ -132,11 +139,10 @@ console.log(module.exports.name)
 ## Templates
 
 
-## Asset Bundling
+## Assets
 
+In this example we use [Grunt](https://github.com/gruntjs/grunt) to manage asset compilation. We compile JavaScripts using [Stitch](https://github.com/sstephenson/stitch) and stylesheets using [Stylus](https://github.com/learnboost/stylus). Check out `Gruntfile.js` in the root directory of this repo for details.
 
-## TODO
-* Lazy load repos
 
 ## License
 
