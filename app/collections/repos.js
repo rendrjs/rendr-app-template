@@ -11,4 +11,4 @@ module.exports = Base.extend({
     }
   }
 });
-module.exports.identifier = 'Repos';
+module.exports.id = 'Repos';

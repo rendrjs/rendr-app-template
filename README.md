@@ -107,7 +107,7 @@ module.exports = {
 var BaseView = require('./base_view');
 
 module.exports = BaseView.extend({});
-module.exports.identifier = 'HomeIndexView';
+module.exports.id = 'HomeIndexView';
 ```
 
 We set the property `indentifier` on the view constructor to aid in the view hydration process. More on that later.

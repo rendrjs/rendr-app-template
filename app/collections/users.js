@@ -5,4 +5,4 @@ module.exports = Base.extend({
   model: User,
   url: '/users'
 });
-module.exports.identifier = 'Users';
+module.exports.id = 'Users';

@@ -4,4 +4,4 @@ module.exports = Base.extend({
   url: '/users/:login',
   idAttribute: 'login'
 });
-module.exports.identifier = 'User';
+module.exports.id = 'User';

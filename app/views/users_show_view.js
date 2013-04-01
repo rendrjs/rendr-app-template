@@ -9,4 +9,4 @@ module.exports = BaseView.extend({
     return data;
   }
 });
-module.exports.identifier = 'UsersShowView';
+module.exports.id = 'UsersShowView';
