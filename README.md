@@ -114,6 +114,51 @@ module.exports = {
 
 ```
 
+Every action gets called with two arguments: `params` and `callback`. The `params` object contains both  route params and query string params. `callback` is called to kick off view rendering. It has this signature:
+
+```js
+function(err, viewName, viewData) {}
+```
+
+### `err`
+Following the Node.js convention, the first argument to the callback is `err`. We'll pass null here because we're not fetching any data, but if we were, that's how we'd communicate a fetching error.
+
+### `viewName`
+This is a string identifier of a view. This is used by the router to find the view class, i.e.:
+
+```js
+require('app/views/' + viewName);
+```
+
+### `viewData` (optional)
+An object to pass to the view constructor. This is how we pass data to the view.
+
+All our `index` action above is really doing is specifying a view class. This is the simple case -- no data fetching, just synchronous view rendering.
+
+It gets more interesting when we decide to fetch some data. Check out the `repos_controller` below.
+
+```js
+// app/controllers/repos_controller.js
+module.exports = {
+  …,
+  
+  show: function(params, callback) {
+    var spec = {
+      model: {model: 'Repo', params: params}
+    };
+    this.app.fetch(spec, function(err, result) {
+      callback(err, 'repos_show_view', result);
+    });
+  }
+};
+
+```
+
+You see here that we call `this.app.fetch()` to fetch our Repo model. Our controller actions are executed in the context of the router, so we have a few properties and methods available, one of which is `this.app`. This is the instance of our application's App context, which is a sublcass of `rendr/base/app`, which itself is a subclass of `Backbone.Model`. You'll see that we inject `app` into every model, view, collection, and controller; this is how we maintain app context throughout our app. 
+
+You see here that we call `callback` with the `err` that comes from `this.app.fetch()`, the view class name, and the `result` of the fetch. `result` in this case is an object with a single "model" property, which is our instance of the `Repo` model.
+
+`this.app.fetch()` does a few nice things for us; it fetches models or collections in parallel, handles errors, does caching, and most importantly, provides a way to boostrap the data fetched on the server in a way that is accessible by the client-side on first render.
 
 ## Views
 
