@@ -7,9 +7,8 @@ The purpose of this little app is to demonstrate one way of using Rendr to build
 
 First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Then, clone this repo to a local directory and run `npm install` to install dependencies:
 
-    $ git clone git@github.com:airbnb/rendr-app-template.git
+    $ npm install rendr-app-template
     $ cd rendr-app-template
-    $ npm install
 
 Then, start the web server. It defaults to port 3030. This will also run `grunt` to compile assets.
 
