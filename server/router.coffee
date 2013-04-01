@@ -1,12 +1,15 @@
 rendrServer = require('rendr').server
 env = require('./lib/env')
 mw = require('./middleware')
+rendrMw = require('rendr/server/middleware')
 
 # insert these methods before rendr method chain for each route
 _preRendrMiddleware = null
 getPreRendrMiddleware =  ->
   _preRendrMiddleware ?= [
-    mw.initClientApp(env.current.clientApp)
+    # Initialize Rendr app, and pass in any config as
+    # app attributes.
+    rendrMw.initApp(env.current.rendrApp)
   ]
 
 buildRendrRoutes = (app) ->

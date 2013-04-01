@@ -13,5 +13,9 @@ exports.config = {
   api: {
     host: "api.github.com",
     protocol: "https"
+  },
+
+  rendrApp: {
+    someProperty: 'someValue'
   }
 };

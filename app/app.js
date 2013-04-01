@@ -11,6 +11,7 @@ module.exports = BaseApp.extend({
     this.router.on('action:start', function() { this.set({loading: true});  }, this);
     this.router.on('action:end',   function() { this.set({loading: false}); }, this);
 
+    // Call 'super'.
     BaseApp.prototype.start.call(this);
   }
 
