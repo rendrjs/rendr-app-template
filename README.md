@@ -72,7 +72,19 @@ Check out the directory structure:
 
 ## CommonJS using Stitch
 
-The CommonJS module pattern is used by Node.js is useful, and using a tool called [Stitch](https://github.com/sstephenson/stitch), we can emulate this pattern in the browser.
+Node.js uses the CommonJS module pattern, and using a tool called [Stitch](https://github.com/sstephenson/stitch), we can emulate it in the browser. This looks familiar in Node.js:
+
+```js
+var User = require('app/models/user');
+```
+Using Stitch, we can use the same `require()` function in the browser. This is a huge win, because it allows us to just think about application logic when creating our views, models, collections, etc., and not about packaging the modules differently for client and server.
+
+In Node.js, you can also use `require()` to load submodules within NPM models. For example, we could load Rendr's base view in order to extend it to create a view for our app.
+
+```js
+var BaseView = require('rendr/shared/base/view');
+```
+Using a trick with the way we do Stitch packaging, this module path works in the browser as well.
 
 ## Routes file
 
