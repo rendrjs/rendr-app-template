@@ -5,7 +5,16 @@ The purpose of this little app is to demonstrate one way of using Rendr to build
 
 ## Running the example
 
-First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Then, clone this repo to a local directory and run `npm install` to install dependencies:
+First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Also, make sure to have `coffee-script` and `grunt-cli` installed globally.
+
+    $ npm install -g coffee-script
+    $ npm install -g grunt-cli
+    
+If you see an error on startup that looks [like this](https://github.com/airbnb/rendr-app-template/issues/2), then you may need to un-install a global copy of `grunt`:
+
+    $ npm uninstall -g grunt
+
+Clone this repo to a local directory and run `npm install` to install dependencies:
 
     $ npm install rendr-app-template
     $ cd rendr-app-template
