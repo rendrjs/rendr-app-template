@@ -41,6 +41,16 @@ module.exports = function(grunt) {
       }
     },
 
+    watch: {
+      scripts: {
+        files: 'app/**/*.js',
+        tasks: ['rendr_stitch'],
+        options: {
+          interrupt: true
+        }
+      }
+    },
+
     rendr_stitch: {
       compile: {
         options: {
@@ -69,6 +79,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-rendr-stitch');
 
