@@ -43,8 +43,15 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: 'app/**/*.js',
+        files: 'app/**/!(compiledTemplates).js',
         tasks: ['rendr_stitch'],
+        options: {
+          interrupt: true
+        }
+      },
+      templates: {
+        files: 'app/**/*.hbs',
+        tasks: ['handlebars', 'rendr_stitch'],
         options: {
           interrupt: true
         }
