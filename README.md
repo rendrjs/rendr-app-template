@@ -19,33 +19,35 @@ Clone this repo to a local directory and run `npm install` to install dependenci
     $ npm install rendr-app-template
     $ cd rendr-app-template
 
-Then, start the web server. It defaults to port 3030. This will also run `grunt` to compile assets.
+Then, use `grunt server` to start up the web server and tell Grunt to recompile and restart the server when files change. 
 
-    $ npm start
-
-    > rendr-app-template@0.0.1 start /Users/spike/code/rendr-app-template
-	> DEBUG=app:* node index.js
-
+    $ grunt server
+	Running "bgShell:runNode" (bgShell) task
+	
 	Running "handlebars:compile" (handlebars) task
 	File "app/templates/compiledTemplates.js" created.
-
-	Running "bundle" task
-	Compiled /Users/spike/code/rendr-app-template/public/mergedAssets.js
-
+	
+	Running "rendr_stitch:compile" (rendr_stitch) task
+	4 Apr 09:58:02 - [nodemon] v0.7.2
+	4 Apr 09:58:02 - [nodemon] watching: /Users/spike1/code/rendr-app-template
+	4 Apr 09:58:02 - [nodemon] starting `node index.js`
+	4 Apr 09:58:02 - [nodemon] reading ignore list
+	File "public/mergedAssets.js" created.
+	
 	Running "stylus:compile" (stylus) task
 	File public/styles.css created.
+	server pid 87338 listening on port 3030 in development mode
+	
+	Running "watch" task
+	Waiting...
 
-	Done, without errors.
-
-	server pid 71878 listening on port 3030 in development mode
-
-Then pull up the app in your web browser:
+Then pull up the app in your web browser. It defaults to port `3030`.
 
     $ open http://localhost:3030
 
 You can choose a different port by passing the `PORT` environment variable:
 
-    $ PORT=80 npm start
+    $ PORT=80 grunt server
 
 ### GitHub API rate limit
 
