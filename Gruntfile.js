@@ -62,6 +62,13 @@ module.exports = function(grunt) {
         options: {
           interrupt: true
         }
+      },
+      stylesheets: {
+        files: stylesheetsDir + '/**/*.styl',
+        tasks: ['stylus'],
+        options: {
+          interrupt: true
+        }
       }
     },
 
