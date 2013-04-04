@@ -9,6 +9,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    bgShell: {
+      runNode: {
+        cmd: 'DEBUG=app:* nodemon index.js',
+        bg: true
+      }
+    },
+
     stylus: {
       compile: {
         options: {
@@ -88,9 +95,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-bg-shell');
   grunt.loadNpmTasks('grunt-rendr-stitch');
 
   grunt.registerTask('compile', ['handlebars', 'rendr_stitch', 'stylus']);
+
+  // Run the server and watch for file changes
+  grunt.registerTask('server', ['bgShell:runNode', 'watch']);
 
   // Default task(s).
   grunt.registerTask('default', ['compile']);
