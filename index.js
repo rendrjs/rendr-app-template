@@ -7,7 +7,7 @@ var spawn = require('child_process').spawn;
 var port = process.env.PORT || 3030;
 
 var compileAssets = function(callback) {
-  var grunt = spawn('grunt');
+  var grunt = spawn('grunt', ['compile']);
   grunt.stdout.on('data', function(data) {
     console.log('' + data);
   });
