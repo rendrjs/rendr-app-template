@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: 'app/**/!(compiledTemplates).js',
+        files: 'app/**/*.js',
         tasks: ['rendr_stitch'],
         options: {
           interrupt: true
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       },
       templates: {
         files: 'app/**/*.hbs',
-        tasks: ['handlebars', 'rendr_stitch'],
+        tasks: ['handlebars'],
         options: {
           interrupt: true
         }
