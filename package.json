@@ -16,7 +16,7 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "0.1.1",
+    "rendr": "~0.2.0",
     "debug": "*"
   },
   "devDependencies": {

@@ -12,8 +12,8 @@ module.exports = class DataAdapter
   constructor: (options) ->
     @options = options || {}
 
-  makeRequest: (req, options, callback) ->
-    if arguments.length is 2
+  makeRequest: (req, api, options, callback) ->
+    if arguments.length is 3
       callback = options
       options = {}
 
@@ -23,35 +23,31 @@ module.exports = class DataAdapter
       # TODO: default to true?
       allow4xx: false
 
-    requestApi = @apiDefaults(req)
+    api = @apiDefaults(api)
     start = new Date().getTime()
-    request requestApi, (err, response, body) =>
+    request api, (err, response, body) =>
       return callback(err) if err?
       end = new Date().getTime()
-      debug('%s %s %s %sms', requestApi.method.toUpperCase(), requestApi.url, response.statusCode, end - start)
+      debug('%s %s %s %sms', api.method.toUpperCase(), api.url, response.statusCode, end - start)
       debug('%s', inspect(response.headers))
       if options.convertErrorCode
         err = @getErrForResponse(response, {allow4xx: options.allow4xx})
-      if ~(response.headers['content-type'] || '').indexOf('application/json')
+      if typeof body is 'string' && ~(response.headers['content-type'] || '').indexOf('application/json')
         try
           body = JSON.parse(body)
         catch e
           err = e
       callback(err, response, body)
 
-  apiDefaults: (req) ->
-    api = _.pick(req, 'method')
-
-    optionsKeys = ['protocol', 'port', 'host']
-
-    urlOpts = _.defaults _.pick(req, 'protocol', 'port', 'query'), _.pick(@options, optionsKeys)
-    urlOpts.pathname = req.path || req.pathname || req.url?.split('?')[0]
+  apiDefaults: (api) ->
+    urlOpts = _.defaults _.pick(api, 'protocol', 'port', 'query'), _.pick(@options, ['protocol', 'port', 'host'])
+    urlOpts.pathname = api.path || api.pathname
 
     api = _.defaults api,
       method: 'GET'
       url: url.format(urlOpts)
 
-    api.json = req.body if req.body?
+    api.json = api.body if api.body?
 
     basicAuth = process.env.BASIC_AUTH
     if basicAuth?
