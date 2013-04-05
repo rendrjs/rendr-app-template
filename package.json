@@ -16,7 +16,7 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "git+ssh://git@github.com:airbnb/rendr.git#2c9aa6ed8d4f743a066cab2c3c64cfa0ec22e723",
+    "rendr": "git://github.com/airbnb/rendr.git#2c9aa6ed8d4f743a066cab2c3c64cfa0ec22e723",
     "debug": "*"
   },
   "devDependencies": {
