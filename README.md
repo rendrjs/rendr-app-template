@@ -18,6 +18,7 @@ Clone this repo to a local directory and run `npm install` to install dependenci
 
     $ npm install rendr-app-template
     $ cd rendr-app-template
+    $ npm install
 
 Then, use `grunt server` to start up the web server and tell Grunt to recompile and restart the server when files change. 
 
