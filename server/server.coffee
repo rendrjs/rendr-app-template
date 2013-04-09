@@ -28,14 +28,10 @@ exports.init = (options, callback) ->
 # options
 # - port
 #
-exports.start = (options, callback) ->
-  options ||= {}
+exports.start = (options = {}) ->
   port = options.port || 3030
-  app.listen port, undefined, (err) ->
-    console.log("server pid #{process.pid} listening on port #{port} in #{app.settings.env} mode")
-    if callback
-      callback(err, {port:port, env:app.settings.env})
-
+  app.listen(port)
+  console.log("server pid #{process.pid} listening on port #{port} in #{app.settings.env} mode")
 
 #
 # Initialize middleware stack
