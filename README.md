@@ -293,6 +293,19 @@ Check out its collection property, which is the instance of `Repos` which we fet
 
 	App.router.currentView.childViews[0].collection
 	=> child {options: Object, app: child, params: Object, meta: Object, length: 30…}
+	
+You can nest subviews *ad infinitum*. Our `user_repos_view` has an empty `childViews` array now, but we could add some subviews if we found it useful for organizing our codebase, or keeping things DRY.
+
+	App.router.currentView.childViews[0].childViews
+	=> []
+
+Views also have a `parentView` property, which will be non-null unless they are a top-level view.
+
+	App.router.currentView.childViews[0].parentView === App.router.currentView
+	=> true
+	
+	App.router.currentView.parentView
+	=> null
 
 ## Templates
 
