@@ -264,7 +264,7 @@ You probably shouldn't ever need to override this; by default it just combines t
 
 Rendr provides a Handlebars helper `{{view}}` that allows you to declaratively nest your views, creating a view hierarchy that you can traverse in your JavaScript.  Check out [`app/templates/users_show_view.hbs`](https://github.com/airbnb/rendr-app-template/blob/master/app/templates/users_show_view.hbs) and [`app/views/users_show_view.js`](https://github.com/airbnb/rendr-app-template/blob/master/app/views/users_show_view.js) for an example:
 
-```handlebars
+```mustache
 {{# app/templates/users_show_view.hbs }}
 ...
 
@@ -318,7 +318,10 @@ We can achieve this by lazy-loading models or collections in our subviews. Check
 
 ```js
 // app/controllers/users_controller.js
-show_lazy: function(params, callback) {
+module.exports = {
+  // ...
+
+  show_lazy: function(params, callback) {
   var spec = {
     model: {model: 'User', params: params}
   };
@@ -335,11 +338,11 @@ show_lazy: function(params, callback) {
   });
 }
 ```
-The first thing to notice is that in our fetch `spec`, we only specify the `User` model, leaving out the `Repos` collection. Then, we tell the view to use a different template than the default. We do this by passing in a `template_name` property to the view's options, which get passed to its constructor. We extend the `result` object to have this; the third argument to our `callback` is an object that's passed to the view's constructor. We could have also created a separate view class in JavaScript for this, to match our new template.
+The first thing to notice is that in our fetch `spec`, we only specify the `User` model, leaving out the `Repos` collection. Then, we tell the view to use a different template than the default. We do this by passing in a `template_name` property to the view's options, which is passed to its constructor. We extend the `result` object to have this; the third argument to our `callback` is an object that's passed to the view's constructor. We could have also created a separate view class in JavaScript for this, to match our new template.
 
 Here's the `users_show_lazy_view` template, abbreviated:
 
-```handlebars
+```mustache
 {{# app/templates/users_show_lazy_view.hbs }}
 ...
 
@@ -352,7 +355,7 @@ Here's the `users_show_lazy_view` template, abbreviated:
 </div>
 ```
 
-So, the only difference to our original `users_show_view` template is that instead of passing `collection=repos` to our `user_repos_view` subview, we pass `collection_name="Repos" param_name="login" param_value=login lazy="true"`. When fetching collections, we specify params, which are used to fetch and cache the models for that collection. We quote all of these arguments except for `param_value=login`; quoted arguments are passed in as string literals, and unquoted arguments are references to variables that are available in the current Handlebars scope. `login` is one of the attributes of a `User` model, which gets passed into the template. The `lazy="true"` tells the view that it needs to fetch (or find a cached version of) the specified model or colleciton.
+So, the only difference to our original `users_show_view` template is that instead of passing `collection=repos` to our `user_repos_view` subview, we pass `collection_name="Repos" param_name="login" param_value=login lazy="true"`. When fetching collections, we specify params, which are used to fetch and cache the models for that collection. We quote all of these arguments except for `param_value=login`; quoted arguments are passed in as string literals, and unquoted arguments are references to variables that are available in the current Handlebars scope. `login` is one of the attributes of a `User` model, which gets passed into the template. The `lazy="true"` tells the view that it needs to fetch (or find a cached version of) the specified model or collection.
 
 We can see this at play in our app if we add a route in our [`app/routes.js`](https://github.com/airbnb/rendr-app-template/blob/master/app/routes.js#L7) file that routes `users_lazy/:login` to `users#show_lazy`, and change our [`app/templates/users_index_view.hbs`](https://github.com/airbnb/rendr-app-template/blob/master/app/templates/users_index_view.hbs#L6) to link to `/users_lazy/{{login}}`.
 
