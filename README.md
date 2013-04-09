@@ -62,6 +62,8 @@ If this happens to you, you can supply your GitHub creds for HTTP Basic Auth usi
 
 ## Getting Started With Rendr
 
+It's worthwhile to read the first [blog post](http://nerds.airbnb.com/weve-launched-our-first-nodejs-app-to-product), which has some background on Rendr and its *raison d'être*.
+
 This basic Rendr app looks like a hybrid between a standard client-side MVC Backbone.js app and an Express app, with a little Rails convention thrown in.
 
 Check out the directory structure:
@@ -256,12 +258,46 @@ If you're building some sort of composite view that doesn't utilize a simple tem
 
 You probably shouldn't ever need to override this; by default it just combines the HTML returned by `getInnerHtml()` and the HTML attributes returned by `getAttributes()` to produce an outer HTML string.
 
-### The view hierarchy
+## The view hierarchy
 
+Rendr provides a Handlebars helper `{{view}}` that allows you to declaratively nest your views, creating a view hierarchy that you can traverse in your JavaScript.  Check out `app/templates/users_show_view.hbs` and `app/views/users_show_view.js` for an example:
+
+```html
+...
+
+<div class="span6">
+  {{view "user_repos_view" collection=repos}}
+</div>
+
+<div class="span6">
+  ...
+</div>
+```
+
+You see that we use the `{{view}}` helper with an argument that indicates which view to be rendered. We can pass data into the view using [Handlebars' hash arguments](http://handlebarsjs.com/expressions.html). Anything you pass as hash arguments will be pass to the subview's constructor and be accessible as `this.options` within the subview. There are a few special options you can pass to a view: `model` or `collection` can be used to directly pass a model or collection instance to a subview. The options `model_name` + `model_id` or `collection_name` + `collection_params` can be used in conjunction with `lazy="true"` to lazily fetch models or collections; more on that later.
+
+Now, from within the `users_show_view` view, we can access any child views using the `this.childViews` array.  A good way to debug and get a feel for this in the browser is to drill down into the global `App` property, which is your instance of `BaseApp`. From `App` you can access other parts of your application. `App.router` is your instance of `ClientRouter`, and it has a number of properties that you can inspect. One of these is `App.router.currentView`, which will always point to the current main view for a page.  For example, if you are viewing wycats' page in our app, [http://localhost:3030/users/wycats](http://localhost:3030/users/wycats), `currentView` will be an instance of `users_show_view`:
+
+    App.router.currentView
+    => child {render: function, cid: "view434", model: child, options: Object, $el: p.fn.p.init[1]…}
+
+From there, we can find our child `user_repos_view` view:
+
+	App.router.currentView.childViews
+	=> [child]
+	
+	App.router.currentView.childViews[0]
+	=> child {render: function, cid: "view436", options: Object, $el: p.fn.p.init[1], el: div.user_repos_view…}
+
+Check out its collection property, which is the instance of `Repos` which we fetched in the controller and passed down in the `{{view}}` helper:
+
+	App.router.currentView.childViews[0].collection
+	=> child {options: Object, app: child, params: Object, meta: Object, length: 30…}
 
 ## Templates
 
 So far, Rendr just supports Handlebars templates, but it should be possible to make this interchangeable. For now, place your templates in `app/templates` with a name that matches the underscorized view's identifier and file extension of `.hbs`.  So, the view with an identifier of `HomeIndexView` will look for a template at `app/templates/home_index_view.hbs`.
+
 
 ## Interacting with a RESTful API
 

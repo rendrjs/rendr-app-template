@@ -4,25 +4,7 @@
 
 <div class="row-fluid">
   <div class="span6">
-    <h3>Repos</h3>
-    <table class="repos-table table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Watchers</th>
-          <th>Forks</th>
-        </tr>
-      </thead>
-      <tbody>
-      {{#each repos}}
-        <tr>
-          <td><a href="/repos/{{../login}}/{{name}}">{{name}}</a></td>
-          <td>{{watchers_count}}</td>
-          <td>{{forks_count}}</td>
-        </tr>
-      {{/each}}
-      </tbody>
-    </table>
+    {{view "user_repos_view" collection=repos}}
   </div>
 
   <div class="span6">
