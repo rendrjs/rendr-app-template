@@ -69,6 +69,13 @@ module.exports = function(grunt) {
         options: {
           interrupt: true
         }
+      },
+      coffee_script: {
+        files: ['src/app/**/*.coffee', 'src/app/**/*.litcoffee'],
+        tasks: ['coffee'],
+        options: {
+          interrupt: true
+        }
       }
     },
 
@@ -96,16 +103,30 @@ module.exports = function(grunt) {
           ]
         }]
       }
+    },
+  
+    coffee: {
+      glob_to_multiple: {
+        expand: true,
+        cwd: 'src/app',
+        src: ['**/*.coffee', '**/*.litcoffee'],
+        dest: 'app/',
+        ext: '.js',
+        options: {
+          bare: true
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-bg-shell');
   grunt.loadNpmTasks('grunt-rendr-stitch');
 
-  grunt.registerTask('compile', ['handlebars', 'rendr_stitch', 'stylus']);
+  grunt.registerTask('compile', ['coffee', 'handlebars', 'rendr_stitch', 'stylus']);
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['bgShell:runNode', 'compile', 'watch']);
