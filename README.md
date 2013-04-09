@@ -264,8 +264,8 @@ You probably shouldn't ever need to override this; by default it just combines t
 
 Rendr provides a Handlebars helper `{{view}}` that allows you to declaratively nest your views, creating a view hierarchy that you can traverse in your JavaScript.  Check out [`app/templates/users_show_view.hbs`](https://github.com/airbnb/rendr-app-template/blob/master/app/templates/users_show_view.hbs) and [`app/views/users_show_view.js`](https://github.com/airbnb/rendr-app-template/blob/master/app/views/users_show_view.js) for an example:
 
-```mustache
-{{# app/templates/users_show_view.hbs }}
+```html
+<!-- app/templates/users_show_view.hbs -->
 ...
 
 <div class="span6">
@@ -342,8 +342,8 @@ The first thing to notice is that in our fetch `spec`, we only specify the `User
 
 Here's the `users_show_lazy_view` template, abbreviated:
 
-```mustache
-{{# app/templates/users_show_lazy_view.hbs }}
+```html
+<!-- app/templates/users_show_lazy_view.hbs -->
 ...
 
 <div class="span6">
