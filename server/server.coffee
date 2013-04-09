@@ -6,7 +6,6 @@ _ = require('underscore')
 rendrServer = require('rendr').server
 express = require('express')
 env = require('./lib/env');
-router = require('./router')
 mw = require('./middleware')
 rendrMw = require('rendr/server/middleware')
 DataAdapter = require('./lib/data_adapter')
