@@ -17,7 +17,7 @@ If you see an error on startup that looks [like this](https://github.com/airbnb/
 
 Clone this repo to a local directory and run `npm install` to install dependencies:
 
-    $ npm install rendr-app-template
+    $ git clone git@github.com:airbnb/rendr-app-template.git
     $ cd rendr-app-template
     $ npm install
 
