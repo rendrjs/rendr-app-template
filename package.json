@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "express": "~>3",
-    "coffee-script": "~1.6.2",
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",

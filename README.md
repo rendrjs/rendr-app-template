@@ -7,11 +7,10 @@ The purpose of this little app is to demonstrate one way of using Rendr to build
 
 ## Running the example
 
-First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Also, make sure to have `coffee-script` and `grunt-cli` installed globally.
+First, make sure to have Node >= 0.8.0 [installed on your system](http://nodejs.org/). Also, make sure to have `grunt-cli` installed globally.
 
-    $ npm install -g coffee-script
     $ npm install -g grunt-cli
-    
+
 If you see an error on startup that looks [like this](https://github.com/airbnb/rendr-app-template/issues/2), then you may need to un-install a global copy of `grunt`:
 
     $ npm uninstall -g grunt
@@ -22,25 +21,25 @@ Clone this repo to a local directory and run `npm install` to install dependenci
     $ cd rendr-app-template
     $ npm install
 
-Then, use `grunt server` to start up the web server and tell Grunt to recompile and restart the server when files change. 
+Then, use `grunt server` to start up the web server and tell Grunt to recompile and restart the server when files change.
 
     $ grunt server
 	Running "bgShell:runNode" (bgShell) task
-	
+
 	Running "handlebars:compile" (handlebars) task
 	File "app/templates/compiledTemplates.js" created.
-	
+
 	Running "rendr_stitch:compile" (rendr_stitch) task
 	4 Apr 09:58:02 - [nodemon] v0.7.2
 	4 Apr 09:58:02 - [nodemon] watching: /Users/spike1/code/rendr-app-template
 	4 Apr 09:58:02 - [nodemon] starting `node index.js`
 	4 Apr 09:58:02 - [nodemon] reading ignore list
 	File "public/mergedAssets.js" created.
-	
+
 	Running "stylus:compile" (stylus) task
 	File public/styles.css created.
 	server pid 87338 listening on port 3030 in development mode
-	
+
 	Running "watch" task
 	Waiting...
 
@@ -161,7 +160,7 @@ It gets more interesting when we decide to fetch some data. Check out the `repos
 // app/controllers/repos_controller.js
 module.exports = {
   // ...
-  
+
   show: function(params, callback) {
     var spec = {
       model: {model: 'Repo', params: params}
@@ -174,7 +173,7 @@ module.exports = {
 
 ```
 
-You see here that we call `this.app.fetch()` to fetch our Repo model. Our controller actions are executed in the context of the router, so we have a few properties and methods available, one of which is `this.app`. This is the instance of our application's App context, which is a sublcass of `rendr/base/app`, which itself is a subclass of `Backbone.Model`. You'll see that we inject `app` into every model, view, collection, and controller; this is how we maintain app context throughout our app. 
+You see here that we call `this.app.fetch()` to fetch our Repo model. Our controller actions are executed in the context of the router, so we have a few properties and methods available, one of which is `this.app`. This is the instance of our application's App context, which is a sublcass of `rendr/base/app`, which itself is a subclass of `Backbone.Model`. You'll see that we inject `app` into every model, view, collection, and controller; this is how we maintain app context throughout our app.
 
 You see here that we call `callback` with the `err` that comes from `this.app.fetch()`, the view class name, and the `result` of the fetch. `result` in this case is an object with a single `model` property, which is our instance of the `Repo` model.
 
@@ -192,11 +191,11 @@ var BaseView = require('./base_view');
 
 module.exports = BaseView.extend({
   className: 'home_index_view',
-  
+
   events: {
     'click p': 'handleClick',
   },
-  
+
   handleClick: function() {…}
 });
 module.exports.id = 'HomeIndexView';
@@ -208,9 +207,9 @@ We set the property `identifier` on the view constructor to aid in the view hydr
 
 Our views, just like all of the code in the `app/` directory, are executed in both the client and the server, but of course certain behaviors are only relevant in the client. The `events` hash is ignored by the server, as well as any DOM-related event handlers.
 
-Notice there's no `render()` method or `template` property specified in the view. The philosophy here is that sensible defaults and convention over configuration should allow you to skip all the typical boilerplate when creating views. The `render()` method should be the same for all your views; all it does is  mash up the template with some data to generate HTML, and insert that HTML into the DOM element. 
+Notice there's no `render()` method or `template` property specified in the view. The philosophy here is that sensible defaults and convention over configuration should allow you to skip all the typical boilerplate when creating views. The `render()` method should be the same for all your views; all it does is  mash up the template with some data to generate HTML, and insert that HTML into the DOM element.
 
-Now, because we're not using a DOM to render our views, we must make sure that the view returns all its HTML as a string. On the server, `view.getHtml()` is called, which returns the view's outer HTML, including wrapper element. This is then handed to Express, which wraps the page with a layout and sends the full HTML page to the client. Behind the scenes, `view.getHtml()` calls `view.getInnerHtml()` for the inner HTML of the view, not including wrapping element, and then constructs the wrapping element based on the `tagName`, `className`, etc. properties, and the key-value pairs of HTML attributes returned by `view.getAttributes()`, which allows you to pass custom attributes to the outer element. 
+Now, because we're not using a DOM to render our views, we must make sure that the view returns all its HTML as a string. On the server, `view.getHtml()` is called, which returns the view's outer HTML, including wrapper element. This is then handed to Express, which wraps the page with a layout and sends the full HTML page to the client. Behind the scenes, `view.getHtml()` calls `view.getInnerHtml()` for the inner HTML of the view, not including wrapping element, and then constructs the wrapping element based on the `tagName`, `className`, etc. properties, and the key-value pairs of HTML attributes returned by `view.getAttributes()`, which allows you to pass custom attributes to the outer element.
 
 On the client, `view.render()` is called, which updates the view's DOM element with the HTML returned from `view.getInnerHtml()`. By default, Backbone will create the wrapper DOM element on its own. We make sure to also set any custom HTML attributes in `view.getAttributes()` on the element.
 
@@ -225,7 +224,7 @@ var BaseView = require('./base_view');
 
 module.exports = BaseView.extend({
   className: 'home_index_view',
-  
+
   postRender: function() {
     this.$('.slider').slider();
   }
@@ -288,7 +287,7 @@ From there, we can find our child `user_repos_view` view:
 
 	App.router.currentView.childViews
 	=> [child]
-	
+
 	App.router.currentView.childViews[0]
 	=> child {render: function, cid: "view436", options: Object, $el: p.fn.p.init[1], el: div.user_repos_view…}
 
@@ -296,7 +295,7 @@ Check out its collection property, which is the instance of `Repos` which we fet
 
 	App.router.currentView.childViews[0].collection
 	=> child {options: Object, app: child, params: Object, meta: Object, length: 30…}
-	
+
 You can nest subviews *ad infinitum*. Our `user_repos_view` has an empty `childViews` array now, but we could add some subviews if we found it useful for organizing our codebase, or keeping things DRY.
 
 	App.router.currentView.childViews[0].childViews
@@ -306,7 +305,7 @@ Views also have a `parentView` property, which will be non-null unless they are 
 
 	App.router.currentView.childViews[0].parentView === App.router.currentView
 	=> true
-	
+
 	App.router.currentView.parentView
 	=> null
 

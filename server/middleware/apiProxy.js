@@ -1,6 +1,6 @@
 var utils = require('../lib/utils'),
     _ = require('underscore'),
-    rendrServer = require('rendr/server/server');
+    rendrServer = require('rendr').server;
 
 // Middleware handler for intercepting API routes.
 module.exports = function() {

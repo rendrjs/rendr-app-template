@@ -5,7 +5,7 @@ var express = require('express'),
     env = require('./lib/env'),
     mw = require('./middleware'),
     DataAdapter = require('./lib/data_adapter'),
-    rendrServer = require('rendr/server/server'),
+    rendrServer = require('rendr').server,
     rendrMw = require('rendr/server/middleware'),
     viewEngine = require('rendr/server/viewEngine'),
     app;
