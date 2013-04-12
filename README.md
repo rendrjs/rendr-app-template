@@ -21,7 +21,7 @@ Clone this repo to a local directory and run `npm install` to install dependenci
     $ cd rendr-app-template
     $ npm install
 
-Then, use `grunt server` to start up the web server and tell Grunt to recompile and restart the server when files change.
+Then, use `grunt server` to start up the web server. Grunt will recompile and restart the server when files change.
 
     $ grunt server
 	Running "bgShell:runNode" (bgShell) task
@@ -43,7 +43,7 @@ Then, use `grunt server` to start up the web server and tell Grunt to recompile 
 	Running "watch" task
 	Waiting...
 
-Then pull up the app in your web browser. It defaults to port `3030`.
+Now, pull up the app in your web browser. It defaults to port `3030`.
 
     $ open http://localhost:3030
 
@@ -92,14 +92,15 @@ Node.js uses the CommonJS module pattern, and using a tool called [Stitch](https
 ```js
 var User = require('app/models/user');
 ```
-Using Stitch, we can use the same `require()` function in the browser. This is a huge win, because it allows us to just think about application logic when creating our views, models, collections, etc., and not about packaging the modules differently for client and server.
+Using Stitch, we can use the same `require()` function in the browser. This allows us to focus on application logic, not packaging modules separately for client and server.
 
 In Node.js, you can also use `require()` to load submodules within NPM models. For example, we could load Rendr's base view in order to extend it to create a view for our app.
 
 ```js
 var BaseView = require('rendr/shared/base/view');
 ```
-Using a trick with the way we do Stitch packaging, this module path works in the browser as well.
+
+Because of a trick in the way we do Stitch packaging, this module path works in the browser as well.
 
 ## Routes file
 
@@ -117,11 +118,11 @@ module.exports = function(match) {
 
 ## Controllers
 
-A controller is a simple JavaScript object, where each property is a controller action. Now, keep in mind that controllers are executed on both the client and the server. Thus they are an abstraction whose sole responsibility is to specify which data is needed to render the view, and which view to render.
+A controller is a simple JavaScript object, where each property is a controller action. Keep in mind that controllers are executed on both the client and the server. Thus, they are an abstraction whose sole responsibility is to specify which data is needed to render the view, and which view to render.
 
 On the server, controllers are executed in response to a request to the Express server, and are used to render the initial page of HTML. On the client, controllers are executed in response to `pushState` events as the user navigates the app.
 
-Here is the most simple controller.
+Here is a very simple controller:
 
 ```js
 // app/controllers/home_controller.js
@@ -133,7 +134,7 @@ module.exports = {
 
 ```
 
-Every action gets called with two arguments: `params` and `callback`. The `params` object contains both  route params and query string params. `callback` is called to kick off view rendering. It has this signature:
+Every action gets called with two arguments: `params` and `callback`. The `params` object contains both route params and query string params. `callback` is called to kick off view rendering. It has this signature:
 
 ```js
 function(err, viewName, viewData) {}
@@ -143,7 +144,7 @@ function(err, viewName, viewData) {}
 Following the Node.js convention, the first argument to the callback is `err`. We'll pass null here because we're not fetching any data, but if we were, that's how we'd communicate a fetching error.
 
 ### `viewName`
-This is a string identifier of a view. This is used by the router to find the view class, i.e.:
+This is a string identifier of a view, used by the router to find the view class, i.e.:
 
 ```js
 require('app/views/' + viewName);
@@ -152,9 +153,9 @@ require('app/views/' + viewName);
 ### `viewData` (optional)
 An object to pass to the view constructor. This is how we pass data to the view.
 
-All our `index` action above is really doing is specifying a view class. This is the simple case -- no data fetching, just synchronous view rendering.
+All our `index` action above really does is specify a view class. This is the simple case -- no data fetching, just synchronous view rendering.
 
-It gets more interesting when we decide to fetch some data. Check out the `repos_controller` below.
+It gets more interesting when we decide to fetch some data. Check out the `repos_controller` below:
 
 ```js
 // app/controllers/repos_controller.js
@@ -321,20 +322,21 @@ module.exports = {
   // ...
 
   show_lazy: function(params, callback) {
-  var spec = {
-    model: {model: 'User', params: params}
-  };
-  this.app.fetch(spec, function(err, result) {
-    if (err) return callback(err);
-    // Extend the hash of options we pass to the view's constructor
-    // to include the `template_name` option, which will be used
-    // to look up the template file. This is a convenience so we
-    // don't have to create a separate view class.
-    _.extend(result, {
-      template_name: 'users_show_lazy_view'
+    var spec = {
+      model: {model: 'User', params: params}
+    };
+    this.app.fetch(spec, function(err, result) {
+      if (err) return callback(err);
+      // Extend the hash of options we pass to the view's constructor
+      // to include the `template_name` option, which will be used
+      // to look up the template file. This is a convenience so we
+      // don't have to create a separate view class.
+      _.extend(result, {
+        template_name: 'users_show_lazy_view'
+      });
+      callback(err, 'users_show_view', result);
     });
-    callback(err, 'users_show_view', result);
-  });
+  }
 }
 ```
 The first thing to notice is that in our fetch `spec`, we only specify the `User` model, leaving out the `Repos` collection. Then, we tell the view to use a different template than the default. We do this by passing in a `template_name` property to the view's options, which is passed to its constructor. We extend the `result` object to have this; the third argument to our `callback` is an object that's passed to the view's constructor. We could have also created a separate view class in JavaScript for this, to match our new template.
