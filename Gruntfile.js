@@ -77,10 +77,10 @@ module.exports = function(grunt) {
         options: {
           dependencies: [
             rendrDir + '/assets/vendor/**/*.js',
+            'assets/vendor/**/*.js',
             rendrModulesDir + '/underscore/underscore.js',
             rendrModulesDir + '/backbone/backbone.js',
-            rendrModulesDir + '/async/lib/async.js',
-            'assets/vendor/**/*.js'
+            rendrModulesDir + '/async/lib/async.js'
           ],
           aliases: [
             {from: rendrDir + '/client', to: 'rendr/client'},
