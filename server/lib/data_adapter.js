@@ -1,4 +1,4 @@
-var utils = require('./utils'),
+var utils = require('rendr/server/utils'),
     _ = require('underscore'),
     url = require('url'),
     request = require('request'),

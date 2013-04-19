@@ -85,7 +85,7 @@ var preRendrMiddleware = [
 ];
 
 function buildApiRoutes(app) {
-  var fnChain = preRendrMiddleware.concat(mw.apiProxy());
+  var fnChain = preRendrMiddleware.concat(rendrMw.apiProxy());
   fnChain.forEach(function(fn) {
     app.use('/api', fn);
   });
