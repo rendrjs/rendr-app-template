@@ -18,7 +18,7 @@ function DataAdapter(options) {
 // `options`: (optional) Options.
 // `callback`: Callback.
 //
-DataAdapter.prototype.makeRequest = function(req, api, options, callback) {
+DataAdapter.prototype.request = function(req, api, options, callback) {
   var _this = this, start, end;
 
   if (arguments.length === 3) {
