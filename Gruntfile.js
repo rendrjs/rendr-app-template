@@ -76,12 +76,14 @@ module.exports = function(grunt) {
       compile: {
         options: {
           dependencies: [
-            'assets/vendor/**/*.js',
-            rendrModulesDir + '/underscore/underscore.js',
-            rendrModulesDir + '/backbone/backbone.js',
-            rendrModulesDir + '/handlebars/dist/handlebars.runtime.js',
-            rendrModulesDir + '/async/lib/async.js'
+            'assets/vendor/**/*.js'
           ],
+          npmDependencies: {
+            underscore: '../rendr/node_modules/underscore/underscore.js',
+            backbone: '../rendr/node_modules/backbone/backbone.js',
+            handlebars: '../rendr/node_modules/handlebars/dist/handlebars.runtime.js',
+            async: '../rendr/node_modules/async/lib/async.js'
+          },
           aliases: [
             {from: rendrDir + '/client', to: 'rendr/client'},
             {from: rendrDir + '/shared', to: 'rendr/shared'}
