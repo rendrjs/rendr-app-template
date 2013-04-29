@@ -82,7 +82,8 @@ module.exports = function(grunt) {
             underscore: '../rendr/node_modules/underscore/underscore.js',
             backbone: '../rendr/node_modules/backbone/backbone.js',
             handlebars: '../rendr/node_modules/handlebars/dist/handlebars.runtime.js',
-            async: '../rendr/node_modules/async/lib/async.js'
+            async: '../rendr/node_modules/async/lib/async.js',
+            'inherit-component': '../rendr/node_modules/inherit-component/index.js'
           },
           aliases: [
             {from: rendrDir + '/client', to: 'rendr/client'},
@@ -93,8 +94,8 @@ module.exports = function(grunt) {
           dest: 'public/mergedAssets.js',
           src: [
             'app/**/*.js',
-            rendrDir + '/client/**/*.coffee',
-            rendrDir + '/shared/**/*.coffee'
+            rendrDir + '/client/**/*.js',
+            rendrDir + '/shared/**/*.js'
           ]
         }]
       }
