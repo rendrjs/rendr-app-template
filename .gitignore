@@ -1,5 +1,6 @@
 node_modules
 public/mergedAssets.js
+public/main.min.js
 app/templates/compiledTemplates.js
 public/styles.css
 .DS_Store
