@@ -49,9 +49,6 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      options: {
-        mangle: false
-      },
       compress: {
         files: {
           'public/main.min.js': ['public/mergedAssets.js'],
