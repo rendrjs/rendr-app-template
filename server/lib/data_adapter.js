@@ -13,7 +13,7 @@ function DataAdapter(options) {
 
 //
 // `req`: Actual request object from Express/Connect.
-// `api`: Object describing API call; properites including 'path', 'query', etc.
+// `api`: Object describing API call; properties including 'path', 'query', etc.
 //        Passed to `url.format()`.
 // `options`: (optional) Options.
 // `callback`: Callback.
