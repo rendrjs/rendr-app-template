@@ -112,7 +112,7 @@ module.exports = function(grunt) {
       test: {
         src: 'test/**/*.test.js',
         options: {
-          reporter: 'min'
+          reporter: 'dot'
         }
       }
     }
