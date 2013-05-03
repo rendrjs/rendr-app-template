@@ -48,10 +48,18 @@ module.exports = function(grunt) {
       }
     },
 
+    uglify: {
+      compress: {
+        files: {
+          'public/main.min.js': ['public/mergedAssets.js'],
+        }
+      }
+    },
+
     watch: {
       scripts: {
         files: 'app/**/*.js',
-        tasks: ['rendr_stitch'],
+        tasks: ['rendr_stitch', 'uglify'],
         options: {
           interrupt: true
         }
@@ -107,8 +115,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-bg-shell');
   grunt.loadNpmTasks('grunt-rendr-stitch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('compile', ['handlebars', 'rendr_stitch', 'stylus']);
+  grunt.registerTask('compile', [
+    'handlebars',
+    'rendr_stitch',
+    'uglify',
+    'stylus'
+  ]);
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['bgShell:runNode', 'compile', 'watch']);
