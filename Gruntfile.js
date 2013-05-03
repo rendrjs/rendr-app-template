@@ -69,13 +69,6 @@ module.exports = function(grunt) {
         options: {
           interrupt: true
         }
-      },
-      tests: {
-        files: ['test/**/*.js', 'app/**/*.js'],
-        tasks: ['cafemocha'],
-        options: {
-          interrupt: true
-        }
       }
     },
 
@@ -106,15 +99,6 @@ module.exports = function(grunt) {
           ]
         }]
       }
-    },
-
-    cafemocha: {
-      test: {
-        src: 'test/**/*.test.js',
-        options: {
-          reporter: 'dot'
-        }
-      }
     }
   });
 
@@ -123,7 +107,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-bg-shell');
   grunt.loadNpmTasks('grunt-rendr-stitch');
-  grunt.loadNpmTasks('grunt-cafe-mocha');
 
   grunt.registerTask('compile', ['handlebars', 'rendr_stitch', 'stylus']);
 
