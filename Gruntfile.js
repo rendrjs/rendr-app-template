@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
     bgShell: {
       runNode: {
-        cmd: './node_modules/nodemon/nodemon.js index.js',
+        cmd: 'node ./node_modules/nodemon/nodemon.js index.js',
         bg: true
       }
     },
