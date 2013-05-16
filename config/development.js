@@ -11,7 +11,7 @@ exports.config = {
   },
 
   apis: {
-    "main": {
+    "default": {
       host: "api.github.com",
       protocol: "https"
     }
