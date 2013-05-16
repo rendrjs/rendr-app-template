@@ -125,7 +125,7 @@ function buildApiHostsMap( ) {
         var Model = require(process.env.PWD+"/" + modelName),
             model = new Model(),
             ob = _.pick(model, 'url', 'apiHost');
-        if (ob.apiHost && hostsMap[ob.apiHost] == undefined) { hostsMap[ob.apiHost] = []; }
+        if (typeof ob.apiHost != undefined && hostsMap[ob.apiHost] == undefined) { hostsMap[ob.apiHost] = []; }
         if (typeof ob.url === 'string') { hostsMap[ob.apiHost].push(ob.url); }
       });
     });

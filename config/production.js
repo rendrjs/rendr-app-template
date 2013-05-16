@@ -10,9 +10,11 @@ exports.config = {
     }
   },
 
-  api: {
-    host: "api.github.com",
-    protocol: "https"
+  apis: {
+    "main": {
+      host: "api.github.com",
+      protocol: "https"
+    }
   },
 
   rendrApp: {
