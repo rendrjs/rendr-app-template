@@ -16,7 +16,7 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "~0.4.4-rc.3",
+    "rendr": "git://github.com/technicolorenvy/rendr#95e26dbfcd634eff91d21505fc3bf6fec9ddf6a9",
     "debug": "*"
   },
   "devDependencies": {
