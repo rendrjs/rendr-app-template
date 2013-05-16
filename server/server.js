@@ -63,7 +63,7 @@ function initMiddleware() {
 function initLibs(callback) {
   var options;
   options = {
-    dataAdapter: new DataAdapter(env.current.apis),
+    dataAdapter: new DataAdapter(env.current.apiHosts),
     errorHandler: mw.errorHandler()
   };
   rendrServer.init(options, callback);
