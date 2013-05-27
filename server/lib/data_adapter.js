@@ -58,8 +58,8 @@ DataAdapter.prototype.request = function(req, api, options, callback) {
 DataAdapter.prototype.apiDefaults = function(api) {
   var urlOpts, basicAuth, authParts, apiHost;
 
-  // will work with either an `apis` collection or single `api`
-  apiHost = this.options[api.apiHost] || this.options.default || this.options || {};
+  // Can specify a particular API to use, falling back to default.
+  apiHost = this.options[api.api] || this.options['default'] || this.options || {};
 
   urlOpts = _.defaults(_.pick(api, 'protocol', 'port', 'query'), _.pick(apiHost, ['protocol', 'port', 'host']));
   urlOpts.pathname = api.path || api.pathname;

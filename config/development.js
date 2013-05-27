@@ -10,10 +10,14 @@ exports.config = {
     }
   },
 
-  apiHosts: {
-    "default": {
-      host: "api.github.com",
-      protocol: "https"
+  api: {
+    'default': {
+      host: 'api.github.com',
+      protocol: 'https'
+    },
+    'travis-ci': {
+      host: 'api.travis-ci.org',
+      protocol: 'https'
     }
   },
 

@@ -2,14 +2,12 @@
 // Home of the main server object
 //
 var express = require('express'),
-    _ = require('underscore'),
     env = require('./lib/env'),
     mw = require('./middleware'),
     DataAdapter = require('./lib/data_adapter'),
     rendrServer = require('rendr').server,
     rendrMw = require('rendr/server/middleware'),
     viewEngine = require('rendr/server/viewEngine'),
-    walk = require('rendr/server/utils').walk,
     app;
 
 app = express();
@@ -63,7 +61,7 @@ function initMiddleware() {
 function initLibs(callback) {
   var options;
   options = {
-    dataAdapter: new DataAdapter(env.current.apiHosts),
+    dataAdapter: new DataAdapter(env.current.api),
     errorHandler: mw.errorHandler()
   };
   rendrServer.init(options, callback);
@@ -87,8 +85,7 @@ var preRendrMiddleware = [
 ];
 
 function buildApiRoutes(app) {
-  var apiHostsMap = buildApiHostsMap(),
-      fnChain = preRendrMiddleware.concat(rendrMw.apiProxy(apiHostsMap));
+  var fnChain = preRendrMiddleware.concat(rendrMw.apiProxy());
   fnChain.forEach(function(fn) {
     app.use('/api', fn);
   });
@@ -111,25 +108,4 @@ function buildRendrRoutes(app) {
     // Attach the route to the Express server.
     app.get(path, fnChain);
   });
-}
-
-function buildApiHostsMap( ) {
-  var hostsMap = {},
-      dirs = ['app/models', 'app/collections'];
-
-  _.each(dirs, function(dir) {
-    walk(dir, function(err, models) {
-      if (err) throw err;
-      // rip the `url` and `apiHost` props from each model/collection
-      models.map(function(modelName) {
-        var Model = require(process.env.PWD+"/" + modelName),
-            model = new Model(),
-            ob = _.pick(model, 'url', 'apiHost');
-        if (typeof ob.apiHost != undefined && hostsMap[ob.apiHost] == undefined) { hostsMap[ob.apiHost] = []; }
-        if (typeof ob.url === 'string') { hostsMap[ob.apiHost].push(ob.url); }
-      });
-    });
-  });
-
-  return hostsMap;
 }
