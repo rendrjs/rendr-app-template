@@ -16,7 +16,7 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "git://github.com/airbnb/rendr#4677ce2032c08b5628cf2c278d1012e79b3bdb9d",
+    "rendr": "0.4.6-rc.1",
     "debug": "*"
   },
   "devDependencies": {
