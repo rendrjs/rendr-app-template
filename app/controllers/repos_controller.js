@@ -10,7 +10,8 @@ module.exports = {
 
   show: function(params, callback) {
     var spec = {
-      model: {model: 'Repo', params: params, ensureKeys: ['language', 'watchers_count']}
+      model: {model: 'Repo', params: params, ensureKeys: ['language', 'watchers_count']},
+      build: {model: 'Build', params: params}
     };
     this.app.fetch(spec, function(err, result) {
       callback(err, 'repos_show_view', result);
