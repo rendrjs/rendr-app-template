@@ -81,8 +81,9 @@ module.exports = function(grunt) {
           npmDependencies: {
             underscore: '../rendr/node_modules/underscore/underscore.js',
             backbone: '../rendr/node_modules/backbone/backbone.js',
-            handlebars: '../rendr/node_modules/handlebars/dist/handlebars.runtime.js',
-            async: '../rendr/node_modules/async/lib/async.js'
+            handlebars: '../rendr/node_modules/rendr-handlebars/node_modules/handlebars/dist/handlebars.runtime.js',
+            async: '../rendr/node_modules/async/lib/async.js',
+            'rendr-handlebars': 'index.js'
           },
           aliases: [
             {from: rendrDir + '/client', to: 'rendr/client'},
