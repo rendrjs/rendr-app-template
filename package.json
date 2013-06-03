@@ -1,6 +1,6 @@
 {
   "name": "rendr-app-template",
-  "version": "0.0.16-gaarf",
+  "version": "0.0.17-gaarf",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,9 +16,10 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "0.4.6-rc.1",
 
     "connect-redis": "*",
+
+    "rendr": "0.4.7-rc.1",
 
     "debug": "*"
   },

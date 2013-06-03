@@ -58,6 +58,14 @@ DataAdapter.prototype.request = function(req, api, options, callback) {
 DataAdapter.prototype.apiDefaults = function(api) {
   var urlOpts, basicAuth, authParts, apiHost;
 
+  api = _.clone(api);
+
+  // If path contains a protocol, assume it's a URL.
+  if (api.path && ~api.path.indexOf('://')) {
+    api.url = api.path;
+    delete api.path;
+  }
+
   // Can specify a particular API to use, falling back to default.
   apiHost = this.options[api.api] || this.options['default'] || this.options || {};
 
