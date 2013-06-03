@@ -8,6 +8,7 @@ var express = require('express'),
     rendrServer = require('rendr').server,
     rendrMw = require('rendr/server/middleware'),
     viewEngine = require('rendr/server/viewEngine'),
+    RedisStore = require('connect-redis')(express),
     app;
 
 app = express();
@@ -36,9 +37,23 @@ exports.start = function start(options) {
 };
 
 //
+// Storage for sessions
+//
+var storage = new RedisStore({prefix:'rendr'});
+
+storage.once('connect', function() {
+  console.log('REDIS connected :-)');
+});
+
+storage.once('disconnect', function() {
+  console.error('REDIS not available... sessions will not work :-(');
+});
+
+//
 // Initialize middleware stack
 //
 function initMiddleware() {
+
   app.configure(function() {
     // set up views
     app.set('views', __dirname + '/../app/views');
@@ -50,6 +65,14 @@ function initMiddleware() {
     app.use(express.static(__dirname + '/../public'));
     app.use(express.logger());
     app.use(express.bodyParser());
+
+    app.use(express.cookieParser());
+    app.use(express.session({
+      store: storage,
+      secret: env.current.sessionSecret,
+      cookie: { maxAge: 1000*60*60*24*7 } // one week
+    }));
+
     app.use(app.router);
     app.use(mw.errorHandler());
   });

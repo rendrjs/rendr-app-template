@@ -13,7 +13,11 @@ module.exports = function(grunt) {
       runNode: {
         cmd: 'node ./node_modules/nodemon/nodemon.js index.js',
         bg: true
-      }
+      },
+      runRedis: {
+        cmd: 'redis-server /usr/local/etc/redis.conf',
+        bg: false
+      },
     },
 
     stylus: {
@@ -111,6 +115,9 @@ module.exports = function(grunt) {
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['bgShell:runNode', 'compile', 'watch']);
+
+  // Run REDIS
+  grunt.registerTask('redis', ['bgShell:runRedis']);
 
   // Default task(s).
   grunt.registerTask('default', ['compile']);

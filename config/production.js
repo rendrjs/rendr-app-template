@@ -21,6 +21,8 @@ exports.config = {
     }
   },
 
+  sessionSecret: 'foobar',
+
   rendrApp: {
     someProperty: 'someValue'
   }
