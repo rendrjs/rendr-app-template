@@ -103,8 +103,20 @@ function buildRoutes(app) {
 
 // Insert these methods before Rendr method chain for all routes, plus API.
 var preRendrMiddleware = [
+
+
   // Initialize Rendr app, and pass in any config as app attributes.
-  rendrMw.initApp(env.current.rendrApp)
+  rendrMw.initApp(env.current.rendrApp),
+
+
+  // access to sessions, and record session creation date
+  function(req, res, next) {
+    if(req.session) {
+      req.session.created = req.session.created || Date.now();
+      req.rendrApp.set('session', req.session);
+    }
+    next();
+  }
 ];
 
 function buildApiRoutes(app) {

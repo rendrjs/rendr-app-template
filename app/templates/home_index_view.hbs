@@ -1,3 +1,14 @@
-<h1>Wecome to GitHub Browser!</h1>
+<h1>Welcome to GitHub Browser!</h1>
+
+
 <p>This is a little app that demonstrates how to use Rendr by consuming GitHub's public Api.</p>
 <p>Check out <a href="/repos">Repos</a> or <a href="/users">Users</a>.</p>
+
+
+{{#if _session}}
+	<hr>
+	<p>Your session was created on {{_session.created}}.</p>
+	<p>Your last request for the home was on {{_session.homeload}}.</p>
+{{/if}}
+
+
