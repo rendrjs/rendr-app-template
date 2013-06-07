@@ -6,7 +6,7 @@ module.exports = {
       collection: {collection: 'Users', params: params}
     };
     this.app.fetch(spec, function(err, result) {
-      callback(err, 'users_index_view', result);
+      callback(err, result);
     });
   },
 
@@ -16,7 +16,7 @@ module.exports = {
       repos: {collection: 'Repos', params: {user: params.login}}
     };
     this.app.fetch(spec, function(err, result) {
-      callback(err, 'users_show_view', result);
+      callback(err, result);
     });
   },
 
@@ -34,9 +34,9 @@ module.exports = {
       // to look up the template file. This is a convenience so we
       // don't have to create a separate view class.
       _.extend(result, {
-        template_name: 'users_show_lazy_view'
+        template_name: 'users/show_lazy'
       });
-      callback(err, 'users_show_view', result);
+      callback(err, result);
     });
   }
 };

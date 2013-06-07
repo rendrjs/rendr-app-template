@@ -37,7 +37,7 @@ module.exports = function(grunt) {
             return filename.replace('app/templates/', '').replace('.hbs', '');
           }
         },
-        src: "app/templates/*.hbs",
+        src: "app/templates/**/*.hbs",
         dest: "app/templates/compiledTemplates.js",
         filter: function(filepath) {
           var filename = path.basename(filepath);
