@@ -182,7 +182,7 @@ You see here that we call `callback` with the `err` that comes from `this.app.fe
 
 ## Views
 
-A Rendr view is a sublcass of `Backbone.View` with some additional methods added to support client-server rendering, plus methods that make it easier to manage the view lifecycle.
+A Rendr view is a subclass of `Backbone.View` with some additional methods added to support client-server rendering, plus methods that make it easier to manage the view lifecycle.
 
 Creating your own view should look familiar if you've used Backbone:
 
