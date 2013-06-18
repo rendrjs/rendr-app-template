@@ -1,6 +1,6 @@
 {
   "name": "rendr-app-template",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "underscore": "~1.4.4",
     "async": "~0.1.22",
     "request": "~2.16",
-    "rendr": "0.4.7-rc.1",
+    "rendr": "0.4.7-rc.3",
     "debug": "*"
   },
   "devDependencies": {
