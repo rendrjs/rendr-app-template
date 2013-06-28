@@ -17,7 +17,7 @@
     "async": "~0.1.22",
     "request": "~2.16",
     "rendr": "git://github.com/airbnb/rendr.git#template-adapter",
-    "rendr-handlebars": "git://github.com/airbnb/rendr-handlebars.git",
+    "rendr-handlebars": "0.0.1",
     "debug": "*"
   },
   "devDependencies": {
