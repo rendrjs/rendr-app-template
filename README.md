@@ -182,7 +182,7 @@ You see here that we call `callback` with the `err` that comes from `this.app.fe
 
 ## Views
 
-A Rendr view is a sublcass of `Backbone.View` with some additional methods added to support client-server rendering, plus methods that make it easier to manage the view lifecycle.
+A Rendr view is a subclass of `Backbone.View` with some additional methods added to support client-server rendering, plus methods that make it easier to manage the view lifecycle.
 
 Creating your own view should look familiar if you've used Backbone:
 
@@ -237,7 +237,7 @@ If you have a need to customize the way your views generate HTML, there are a fe
 
 #### getTemplateName()
 
-Be default, `getTemplateName()` returns the underscored version of the view constructor's `identifier` property; so in our case, `home_index_view`. It will also look for `options.template_name`, which is useful for initialing views to use a certain template. The view will look in `app/templates` for the value returned by this function.
+By default, `getTemplateName()` returns the underscored version of the view constructor's `identifier` property; so in our case, `home_index_view`. It will also look for `options.template_name`, which is useful for initialing views to use a certain template. The view will look in `app/templates` for the value returned by this function.
 
 #### getTemplate()
 

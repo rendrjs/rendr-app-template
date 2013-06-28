@@ -1,4 +1,4 @@
-var BaseView = require('./base_view');
+var BaseView = require('../base');
 
 module.exports = BaseView.extend({
   className: 'users_show_view',
@@ -9,4 +9,4 @@ module.exports = BaseView.extend({
     return data;
   }
 });
-module.exports.id = 'UsersShowView';
+module.exports.id = 'users/show';

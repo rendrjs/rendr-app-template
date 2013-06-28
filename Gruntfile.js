@@ -38,7 +38,7 @@ module.exports = function(grunt) {
             return filename.replace('app/templates/', '').replace('.hbs', '');
           }
         },
-        src: "app/templates/*.hbs",
+        src: "app/templates/**/*.hbs",
         dest: "app/templates/compiledTemplates.js",
         filter: function(filepath) {
           var filename = path.basename(filepath);
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         }
       },
       stylesheets: {
-        files: stylesheetsDir + '/**/*.styl',
+        files: [stylesheetsDir + '/**/*.styl', stylesheetsDir + '/**/*.css'],
         tasks: ['stylus'],
         options: {
           interrupt: true

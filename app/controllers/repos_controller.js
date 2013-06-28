@@ -4,7 +4,7 @@ module.exports = {
       collection: {collection: 'Repos', params: params}
     };
     this.app.fetch(spec, function(err, result) {
-      callback(err, 'repos_index_view', result);
+      callback(err, result);
     });
   },
 
@@ -14,7 +14,7 @@ module.exports = {
       build: {model: 'Build', params: params}
     };
     this.app.fetch(spec, function(err, result) {
-      callback(err, 'repos_show_view', result);
+      callback(err, result);
     });
   }
 };
