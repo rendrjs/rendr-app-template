@@ -5,9 +5,10 @@ var express = require('express'),
     env = require('./lib/env'),
     mw = require('./middleware'),
     DataAdapter = require('./lib/data_adapter'),
-    rendrServer = require('rendr').server,
+    rendr = require('rendr'),
     rendrMw = require('rendr/server/middleware'),
-    app;
+    app,
+    server;
 
 app = express();
 
@@ -15,12 +16,14 @@ app = express();
  * Initialize our server
  */
 exports.init = function init(callback) {
-  initServer(function(err, result) {
-    if (err) return callback(err);
+  try {
+    initServer();
     initMiddleware();
     buildRoutes(app);
-    callback(null, result);
-  });
+    callback(null);
+  } catch (err) {
+    callback(err);
+  }
 };
 
 /**
@@ -43,12 +46,12 @@ exports.start = function start(options) {
  * - dataAdapter
  * - errorHandler
  */
-function initServer(callback) {
+function initServer() {
   var options = {
     dataAdapter: new DataAdapter(env.current.api),
     errorHandler: mw.errorHandler()
   };
-  rendrServer.init(options, callback);
+  server = rendr.createServer(app, options);
 }
 
 /**
@@ -59,7 +62,7 @@ function initMiddleware() {
     // set up views
     app.set('views', __dirname + '/../app/views');
     app.set('view engine', 'js');
-    app.engine('js', rendrServer.viewEngine.render);
+    app.engine('js', server.viewEngine.render);
 
     // set the middleware stack
     app.use(express.compress());
@@ -98,7 +101,7 @@ function buildApiRoutes(app) {
 function buildRendrRoutes(app) {
   var routes, path, definition, fnChain;
   // attach Rendr routes to our Express app.
-  routes = rendrServer.router.buildRoutes();
+  routes = server.router.buildRoutes();
   routes.forEach(function(args) {
     path = args.shift();
     definition = args.shift();
