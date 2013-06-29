@@ -7,27 +7,28 @@ var express = require('express'),
     DataAdapter = require('./lib/data_adapter'),
     rendrServer = require('rendr').server,
     rendrMw = require('rendr/server/middleware'),
-    viewEngine = require('rendr/server/viewEngine'),
     app;
 
 app = express();
 
-//
-// Initialize our server
-//
-exports.init = function init(options, callback) {
-  initMiddleware();
-  initLibs(function(err, result) {
+/**
+ * Initialize our server
+ */
+exports.init = function init(callback) {
+  initServer(function(err, result) {
     if (err) return callback(err);
+    initMiddleware();
     buildRoutes(app);
     callback(null, result);
   });
 };
 
-//
-// options
-// - port
-//
+/**
+ * Start the Express server.
+ *
+ * Options:
+ * - port
+ */
 exports.start = function start(options) {
   options = options || {};
   var port = options.port || 3030;
@@ -35,15 +36,30 @@ exports.start = function start(options) {
   console.log("server pid " + process.pid + " listening on port " + port + " in " + app.settings.env + " mode");
 };
 
-//
-// Initialize middleware stack
-//
+/**
+ * Initialize our Rendr server.
+ *
+ * We can pass inject various modules here to override default behavior:
+ * - dataAdapter
+ * - errorHandler
+ */
+function initServer(callback) {
+  var options = {
+    dataAdapter: new DataAdapter(env.current.api),
+    errorHandler: mw.errorHandler()
+  };
+  rendrServer.init(options, callback);
+}
+
+/**
+ * Initialize middleware stack
+ */
 function initMiddleware() {
   app.configure(function() {
     // set up views
     app.set('views', __dirname + '/../app/views');
     app.set('view engine', 'js');
-    app.engine('js', viewEngine);
+    app.engine('js', rendrServer.viewEngine.render);
 
     // set the middleware stack
     app.use(express.compress());
@@ -55,21 +71,9 @@ function initMiddleware() {
   });
 }
 
-//
-// Initialize our libraries
-//
-function initLibs(callback) {
-  var options;
-  options = {
-    dataAdapter: new DataAdapter(env.current.api),
-    errorHandler: mw.errorHandler()
-  };
-  rendrServer.init(options, callback);
-}
-
-//
-// Routes & middleware
-//
+/**
+ * Routes & middleware
+ */
 
 // Attach our routes to our server
 function buildRoutes(app) {

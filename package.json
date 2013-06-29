@@ -1,6 +1,6 @@
 {
   "name": "rendr-app-template",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "async": "~0.1.22",
     "request": "~2.16",
     "rendr-handlebars": "0.0.2",
-    "rendr": "0.4.8-alpha.01",
+    "rendr": "0.4.8-alpha.02",
     "debug": "*"
   },
   "devDependencies": {
