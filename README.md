@@ -204,7 +204,7 @@ module.exports.id = 'HomeIndexView';
 
 You can add `className`, `tagName`, `events`, and all of the other `Backbone.View` properties you know and love.
 
-We set the property `identifier` on the view constructor to aid in the view hydration process. More on that later.
+We set the property `id` on the view constructor to aid in the view hydration process. More on that later.
 
 Our views, just like all of the code in the `app/` directory, are executed in both the client and the server, but of course certain behaviors are only relevant in the client. The `events` hash is ignored by the server, as well as any DOM-related event handlers.
 
