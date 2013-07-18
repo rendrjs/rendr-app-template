@@ -204,7 +204,7 @@ module.exports.id = 'HomeIndexView';
 
 You can add `className`, `tagName`, `events`, and all of the other `Backbone.View` properties you know and love.
 
-We set the property `identifier` on the view constructor to aid in the view hydration process. More on that later.
+We set the property `id` on the view constructor to aid in the view hydration process. More on that later.
 
 Our views, just like all of the code in the `app/` directory, are executed in both the client and the server, but of course certain behaviors are only relevant in the client. The `events` hash is ignored by the server, as well as any DOM-related event handlers.
 
@@ -237,7 +237,7 @@ If you have a need to customize the way your views generate HTML, there are a fe
 
 #### getTemplateName()
 
-By default, `getTemplateName()` returns the underscored version of the view constructor's `identifier` property; so in our case, `home_index_view`. It will also look for `options.template_name`, which is useful for initialing views to use a certain template. The view will look in `app/templates` for the value returned by this function.
+By default, `getTemplateName()` returns the underscored version of the view constructor's `id` property; so in our case, `home_index_view`. It will also look for `options.template_name`, which is useful for initialing views to use a certain template. The view will look in `app/templates` for the value returned by this function.
 
 #### getTemplate()
 
