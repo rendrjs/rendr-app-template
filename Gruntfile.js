@@ -10,13 +10,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    bgShell: {
-      runNode: {
-        cmd: 'node ./node_modules/nodemon/nodemon.js index.js',
-        bg: true
-      }
-    },
-
     stylus: {
       compile: {
         options: {
@@ -109,13 +102,25 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-bg-shell');
   grunt.loadNpmTasks('grunt-rendr-stitch');
+
+  grunt.registerTask('runNode', function () {
+    var done = this.async(),
+      child = grunt.util.spawn({
+        cmd: 'node',
+        args: ['./node_modules/nodemon/nodemon.js', '--debug', 'index.js']
+      }, function () {
+        done(new Error('Nodemon quit.'));
+      });
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+  });
+
 
   grunt.registerTask('compile', ['handlebars', 'rendr_stitch', 'stylus']);
 
   // Run the server and watch for file changes
-  grunt.registerTask('server', ['bgShell:runNode', 'compile', 'watch']);
+  grunt.registerTask('server', ['runNode', 'compile', 'watch']);
 
   // Default task(s).
   grunt.registerTask('default', ['compile']);
