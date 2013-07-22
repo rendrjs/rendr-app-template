@@ -105,16 +105,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-rendr-stitch');
 
   grunt.registerTask('runNode', function () {
-    var done = this.async(),
-      child = grunt.util.spawn({
-        cmd: 'node',
-        args: ['./node_modules/nodemon/nodemon.js', '--debug', 'index.js'],
-        opts: {
-          stdio: 'inherit'
-        }
-      }, function () {
-        done(new Error('Nodemon quit.'));
-      });
+    grunt.util.spawn({
+      cmd: 'node',
+      args: ['./node_modules/nodemon/nodemon.js', '--debug', 'index.js'],
+      opts: {
+        stdio: 'inherit'
+      }
+    }, function () {
+      grunt.fail.fatal(new Error("nodemon quit"));
+    });
   });
 
 
