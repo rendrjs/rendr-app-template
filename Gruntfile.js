@@ -108,12 +108,13 @@ module.exports = function(grunt) {
     var done = this.async(),
       child = grunt.util.spawn({
         cmd: 'node',
-        args: ['./node_modules/nodemon/nodemon.js', '--debug', 'index.js']
+        args: ['./node_modules/nodemon/nodemon.js', '--debug', 'index.js'],
+        opts: {
+          stdio: 'inherit'
+        }
       }, function () {
         done(new Error('Nodemon quit.'));
       });
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
   });
 
 
