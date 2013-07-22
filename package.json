@@ -17,7 +17,7 @@
     "async": "~0.1.22",
     "request": "~2.16",
     "rendr-handlebars": "0.0.5",
-    "rendr": ">=0.4.8-4",
+    "rendr": "0.5.0-alpha01",
     "debug": "*"
   },
   "devDependencies": {
