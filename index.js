@@ -68,4 +68,9 @@ function start() {
  */
 initMiddleware();
 initServer();
-start();
+// Only start server if this script is executed, not if it's require()'d
+if (require.main === module) {
+  start();
+}
+
+exports.app = app;
