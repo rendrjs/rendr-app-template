@@ -1,6 +1,6 @@
 var express = require('express'),
     rendr = require('rendr'),
-    env = require('./server/lib/env'),
+    config = require('config'),
     mw = require('./server/middleware'),
     DataAdapter = require('./server/lib/data_adapter'),
     app,
@@ -41,9 +41,9 @@ function initMiddleware() {
  */
 function initServer() {
   var options = {
-    dataAdapter: new DataAdapter(env.current.api),
+    dataAdapter: new DataAdapter(config.api),
     errorHandler: mw.errorHandler(),
-    appData: env.current.rendrApp
+    appData: config.rendrApp
   };
   server = rendr.createServer(app, options);
 }
@@ -52,7 +52,7 @@ function initServer() {
  * Start the Express server.
  */
 function start() {
-  var port = process.env.PORT || 3030;
+  var port = process.env.PORT || config.App.port;
   app.listen(port);
   console.log("server pid %s listening on port %s in %s mode",
     process.pid,
@@ -60,6 +60,14 @@ function start() {
     app.settings.env);
 }
 
+/**
+ * Here we actually initialize everything and start the Express server.
+ *
+ * We have to add the middleware before we initialize the server, otherwise
+ * the 404 handler gets too greedy, and intercepts i.e. static assets.
+ */
+initMiddleware();
+initServer();
 /**
  * Here we actually initialize everything and start the Express server.
  *
