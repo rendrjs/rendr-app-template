@@ -1,6 +1,6 @@
 # Default config
 
-App:
+app:
   host: localhost
   port: 3030
 

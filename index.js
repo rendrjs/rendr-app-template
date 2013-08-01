@@ -52,7 +52,7 @@ function initServer() {
  * Start the Express server.
  */
 function start() {
-  var port = process.env.PORT || config.App.port;
+  var port = process.env.PORT || config.app.port;
   app.listen(port);
   console.log("server pid %s listening on port %s in %s mode",
     process.pid,
@@ -60,14 +60,6 @@ function start() {
     app.settings.env);
 }
 
-/**
- * Here we actually initialize everything and start the Express server.
- *
- * We have to add the middleware before we initialize the server, otherwise
- * the 404 handler gets too greedy, and intercepts i.e. static assets.
- */
-initMiddleware();
-initServer();
 /**
  * Here we actually initialize everything and start the Express server.
  *
