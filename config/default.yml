@@ -1,7 +1,6 @@
 # Default config
 
 app:
-  host: localhost
   port: 3030
 
 rendrApp:
