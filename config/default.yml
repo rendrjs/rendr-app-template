@@ -1,0 +1,22 @@
+# Default config
+
+app:
+  port: 3030
+
+rendrApp:
+  someProperty: someValue
+
+assets:
+  minify: false
+  cdn:
+    protocol: http
+    cnames: ['localhost']
+    pathPrefix: ''
+
+api:
+  default: 
+    host: api.github.com
+    protocol: https
+  travis-ci:
+    host: api.travis-ci.org
+    protocol: https
