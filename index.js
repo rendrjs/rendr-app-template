@@ -1,6 +1,6 @@
 var express = require('express'),
     rendr = require('rendr'),
-    env = require('./server/lib/env'),
+    config = require('config'),
     mw = require('./server/middleware'),
     DataAdapter = require('./server/lib/data_adapter'),
     app,
@@ -41,9 +41,9 @@ function initMiddleware() {
  */
 function initServer() {
   var options = {
-    dataAdapter: new DataAdapter(env.current.api),
+    dataAdapter: new DataAdapter(config.api),
     errorHandler: mw.errorHandler(),
-    appData: env.current.rendrApp
+    appData: config.rendrApp
   };
   server = rendr.createServer(app, options);
 }
@@ -52,7 +52,7 @@ function initServer() {
  * Start the Express server.
  */
 function start() {
-  var port = process.env.PORT || 3030;
+  var port = process.env.PORT || config.app.port;
   app.listen(port);
   console.log("server pid %s listening on port %s in %s mode",
     process.pid,
