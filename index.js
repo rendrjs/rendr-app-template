@@ -10,7 +10,7 @@ app = express();
 /**
  * Initialize Express middleware stack.
  */
-function initMiddleware() {
+function initMiddleware(rendrServer) {
   app.use(express.compress());
   app.use(express.static(__dirname + '/public'));
   app.use(express.logger());
@@ -24,7 +24,7 @@ function initMiddleware() {
    * mount your Rendr app at a certain path, or even host multiple, self-contained
    * Rendr apps in the same codebase with the same Express app.
    */
-  app.use(initServer().expressApp);
+  app.use(rendrServer.expressApp);
 
   /**
    * Error handler goes last.
@@ -64,7 +64,8 @@ function start() {
 /**
  * Here we actually initialize everything and start the Express server.
  */
-initMiddleware();
+var server = initServer();
+initMiddleware(server);
 
 /**
  * Only start server if this script is executed, not if it's require()'d.
