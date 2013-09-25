@@ -3,49 +3,50 @@ var express = require('express'),
     config = require('config'),
     mw = require('./server/middleware'),
     DataAdapter = require('./server/lib/data_adapter'),
-    app,
-    server;
+    app;
 
 app = express();
 
 /**
  * Initialize Express middleware stack.
  */
-function initMiddleware() {
+function initMiddleware(rendrServer) {
   app.use(express.compress());
   app.use(express.static(__dirname + '/public'));
   app.use(express.logger());
   app.use(express.bodyParser());
 
   /**
-   * Rendr routes are attached with `app.get()`, which adds them to the
-   * `app.router` middleware.
+   * Rendr provides its own instance of Express, for better encapsulation.
+   * You could use it directly as your main app, but we find it's more flexible
+   * to simply "mount" it as a sub-app onto another Express instance, which is
+   * equivalent to just using it as middleware. This flexibility allows you to
+   * mount your Rendr app at a certain path, or even host multiple, self-contained
+   * Rendr apps in the same codebase with the same Express app.
    */
-  app.use(app.router);
+  app.use(rendrServer.expressApp);
 
   /**
    * Error handler goes last.
    */
-  app.use(mw.errorHandler());
+  app.use(express.errorHandler());
 }
 
 /**
  * Initialize our Rendr server.
  *
  * We can pass inject various modules and options here to override
- * default behavior:
+ * default behavior, i.e.:
  * - dataAdapter
  * - errorHandler
- * - notFoundHandler
  * - appData
  */
 function initServer() {
   var options = {
     dataAdapter: new DataAdapter(config.api),
-    errorHandler: mw.errorHandler(),
     appData: config.rendrApp
   };
-  server = rendr.createServer(app, options);
+  return rendr.createServer(app, options);
 }
 
 /**
@@ -62,13 +63,14 @@ function start() {
 
 /**
  * Here we actually initialize everything and start the Express server.
- *
- * We have to add the middleware before we initialize the server, otherwise
- * the 404 handler gets too greedy, and intercepts i.e. static assets.
  */
-initMiddleware();
-initServer();
-// Only start server if this script is executed, not if it's require()'d
+var server = initServer();
+initMiddleware(server);
+
+/**
+ * Only start server if this script is executed, not if it's require()'d.
+ * This makes it easier to run integration tests on ephemeral ports.
+ */
 if (require.main === module) {
   start();
 }
