@@ -5,3 +5,5 @@ public/styles.css
 .DS_Store
 npm-debug.log
 config/runtime.json
+*.swp
+*.swo
