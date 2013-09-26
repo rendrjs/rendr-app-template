@@ -18,7 +18,7 @@ util.inherits(DataAdapter, RestAdapter);
  * if the `BASIC_AUTH` environment variable is present.
  */
 DataAdapter.prototype.apiDefaults = function(api) {
-  var basicAuth, authParts, api;
+  var basicAuth, authParts;
 
   api = RestAdapter.prototype.apiDefaults.call(this, api);
 
