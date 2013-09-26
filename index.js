@@ -17,14 +17,49 @@ function initMiddleware(rendrServer) {
   app.use(express.bodyParser());
 
   /**
-   * Rendr provides its own instance of Express, for better encapsulation.
-   * You could use it directly as your main app, but we find it's more flexible
-   * to simply "mount" it as a sub-app onto another Express instance, which is
-   * equivalent to just using it as middleware. This flexibility allows you to
-   * mount your Rendr app at a certain path, or even host multiple, self-contained
-   * Rendr apps in the same codebase with the same Express app.
+   * To mount Rendr, which owns its own Express instance for better encapsulation,
+   * simply add `rendrServer` as a middleware onto your Express app.
+   * This will add all of the routes defined in your `app/routes.js`.
+   * If you want to mount your Rendr app onto a path, you can do something like:
+   *
+   *     app.use('/my_cool_app', rendrServer);
    */
-  app.use(rendrServer.expressApp);
+  app.use(rendrServer);
+
+  /**
+   * If you want to add custom middleware to Rendr's Express app, use `rendrServer.configure()`.
+   * The only argument will be Rendr's internal Express instance, to which you can add middleware
+   * or otherwise modify. You might want to do this to add middleware that needs to access
+   * `req.rendrApp`, for example for fetching some data that you want to be available both
+   * on the client & the server.
+   *
+   * It would look something like this:
+   *
+   *     rendrServer.configure(function(rendrExpressApp) {
+   *       rendrExpressApp.use(function(req, res, next) {
+   *         someLibrary.fetchSomethingAsynchronously(function(err, result) {
+   *           if (err) return next(err);
+   *           req.rendrApp.set('someProperty', result);
+   *           next();
+   *         });
+   *       });
+   *     });
+   *
+   * Then, in a model or view, you could access 'someProperty' from the `app`:
+   *
+   *     // app/views/some_view.js
+   *     module.exports = BaseView.extend({
+   *       ...
+   *
+   *       // Let's extend the `getTemplateData` method to pass some value to our template
+   *       // that is dependent upon the `app`.
+   *       getTemplateData: function() {
+   *         var data = BaseView.prototype.getTemplateData.call(this);
+   *         data.someProperty = this.app.get('someProperty');
+   *         return data;
+   *       }
+   *     });
+   */
 
   /**
    * Error handler goes last.
@@ -46,7 +81,7 @@ function initServer() {
     dataAdapter: new DataAdapter(config.api),
     appData: config.rendrApp
   };
-  return rendr.createServer(app, options);
+  return rendr.createServer(options);
 }
 
 /**
