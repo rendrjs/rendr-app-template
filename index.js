@@ -1,7 +1,6 @@
 var express = require('express')
   , rendr = require('rendr')
   , config = require('config')
-  , mw = require('./server/middleware')
   , DataAdapter = require('./server/lib/data_adapter')
   , app = express();
 
