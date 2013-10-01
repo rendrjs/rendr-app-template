@@ -36,7 +36,7 @@ module.exports = {
       _.extend(result, {
         template_name: 'users/show_lazy'
       });
-      callback(err, result);
+      callback(err, 'users/show', result);
     });
   }
 };
