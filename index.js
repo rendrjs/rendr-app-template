@@ -15,8 +15,7 @@ var express = require('express')
  */
 var server = rendr.createServer({
   dataAdapter: new DataAdapter(config.api),
-  appData: config.rendrApp,
-  errorHandler: express.errorHandler()
+  appData: config.rendrApp
 });
 
 
