@@ -1,9 +1,11 @@
 # Note:
 
-## This repo has been deprecated in favor of the [examples](https://github.com/airbnb/rendr/tree/master/examples) directory in `airbnb/rendr`, which are easier to keep up-to-date.
+## This repo has been deprecated in favor of the
+[rendr-examples](https://github.com/rendrjs/rendr-examples) repo, which is
+easier to keep up-to-date.
 
 
------------ 
+-----------
 
 # Rendr App Template
 ## GitHub Browser
